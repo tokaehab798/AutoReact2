@@ -1,0 +1,215 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Home.css";
+
+// Sample data arrays (replace with real data from API or other sources)
+const srcsofdepartment = ["path_to_img1.jpg", "path_to_img2.jpg"];
+const titlesNames = ["Member One", "Member Two"];
+const links = ["/details1", "/details2"];
+
+const srcsofprojects = ["project_img1.jpg", "project_img2.jpg"];
+const projectsNames = ["Project One", "Project Two"];
+
+const ThingsYoullLearn = [
+  { name: "Quantum Machine Learning", bgColor: "bg-success" },
+  { name: "Learn Machine Learning", bgColor: "maincolor" },
+  // Add more topics as needed
+];
+
+function HomePage() {
+  return (
+    <section className="text-center position-relative">
+      {/* Introduction */}
+      <div className="row">
+        <div className="col-lg-12 p-0 m-0">
+          <img
+            src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            className="position-relative"
+            alt="image"
+            style={{ width: "100%", height: "500px" }}
+          />
+          <h1
+            className="position-absolute text-white"
+            style={{ top: "7%", left: "30%" }}
+          >
+            Where curiosity meets computation. <br /> Welcome to our AI
+            department.
+          </h1>
+        </div>
+      </div>
+
+      {/* About AI Department */}
+      <div className="row justify-content-center p-5 bg-light">
+        <div className="col-lg-6">
+          <p>
+            Welcome to Misr University For Science And Technology's Artificial
+            Intelligence Department! We're dedicated to advancing AI research,
+            education, and innovation. Our passionate team explores AI's
+            potential in machine learning, natural language processing, computer
+            vision, and robotics. With cutting-edge courses, facilities, and
+            research opportunities, we invite students and professionals to join
+            us in shaping the future of technology through AI.
+          </p>
+          <Link
+            to="/adminlayout/adminabout"
+            className="btn btn-success text-white text-decoration-none"
+          >
+            About Us
+          </Link>
+        </div>
+      </div>
+
+      {/* Things You'll Learn */}
+      <div className="p-5">
+        <div className="text-white">
+          <h2 className="mb-lg-5 text-dark">Things You'll Learn</h2>
+          <div className="container">
+            {ThingsYoullLearn.map((topic, i) => (
+              <div
+                key={i}
+                className={`button-like ${topic.bgColor}`}
+                style={{ margin: "auto" }}
+              >
+                <div className="dot"></div>
+                <div className="name">{topic.name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Department Members Section */}
+      <div className="bg-light">
+        <div className="container p-5">
+          <h2 className="text-center mb-3">Department Members</h2>
+          <div className="underline mb-lg-5 bg-success"></div>
+          <div className="row justify-content-center">
+            {srcsofdepartment.map((src, i) => (
+              <div key={i} className="col-3 mb-4 m-md-4">
+                <div className="member-card card fixed-height-card-member">
+                  <img
+                    src={
+                      "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    }
+                    className="img-fluid card-img-top lazyload img-thumbnail"
+                    alt="Member Image"
+                    style={{ height: "200px" }}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title text-center">{titlesNames[i]}</h5>
+                    <Link
+                      to={links[i]}
+                      className="btn btn-success d-block mx-auto"
+                    >
+                      See Details{" "}
+                      <i
+                        className="fa fa-arrow-right ms-2"
+                        style={{ marginTop: "5px" }}
+                      ></i>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-4">
+            <Link
+              to="/studentlayout/departmentmembers"
+              className="btn btn-outline-success"
+            >
+              See All
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Projects Section */}
+      <div className="container p-5">
+        <h2 className="text-center mb-3">Projects</h2>
+        <div className="underline mb-lg-5 bg-success"></div>
+        <div className="row justify-content-center">
+          {srcsofprojects.map((src, i) => (
+            <div key={i} className="col-md-3 mb-4 m-md-4">
+              <div className="project-card card fixed-height-card">
+                <img
+                  src={
+                    "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                  }
+                  className="img-fluid card-img-top lazyload img-thumbnail"
+                  alt="Project Image"
+                  style={{ height: "200px" }}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{projectsNames[i]}</h5>
+                  <Link
+                    to="/adminlayout/adminproject"
+                    className="btn btn-success d-block"
+                  >
+                    See Course Guide{" "}
+                    <i
+                      className="fa fa-arrow-right  ms-2"
+                      style={{ marginTop: "5px" }}
+                    ></i>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="text-center mt-4">
+          <Link
+            to="/adminlayout/adminprojects"
+            className="btn btn-outline-success"
+          >
+            See All
+          </Link>
+        </div>
+      </div>
+
+      {/* We Are Here to Help Section */}
+      <div className="bg-light p-5">
+        <div className="p-5">
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-md-8">
+                <div className="row">
+                  <div className="col-md-6">
+                    <img
+                      src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                      className="img-fluid"
+                      alt="Image"
+                      style={{ width: "350px" }}
+                    />
+                  </div>
+                  <div className="col-md-6 d-flex align-items-center">
+                    <div>
+                      <h2>We're Here to Help</h2>
+                      <p>
+                        Read through our FAQs and, if you can't find what you're
+                        looking for, our experts will be happy to answer your
+                        questions.
+                      </p>
+                      <div className="d-flex justify-content-center align-items-center">
+                        <button className="btn btn-success me-2">
+                          Read FAQs
+                        </button>
+                        <Link
+                          to="/contact"
+                          className="text-decoration-none text-body-tertiary"
+                        >
+                          <i className="fas fa-envelope me-2"></i>Ask a Question
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default HomePage;
