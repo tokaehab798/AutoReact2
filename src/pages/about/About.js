@@ -40,7 +40,7 @@ const About = () => {
           </div>
           <div className="col-lg-6">
             <img
-              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              src="images/WhatsApp Image 2024-03-09 at 3.10.15 PM (1).jpeg"
               alt="AI Department"
               className="img-fluid department-image"
             />

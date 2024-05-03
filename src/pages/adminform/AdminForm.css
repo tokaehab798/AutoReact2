@@ -1,0 +1,7 @@
+.forms-row:not(:last-child) {
+    margin-bottom: 20px; /* Adjust the margin-bottom value as needed */
+}
+.dropdown-center {
+    position: relative;
+    top: -8px; /* Adjust this value as needed to align it with the center of the "Form Type" label */
+}

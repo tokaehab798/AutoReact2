@@ -13,7 +13,6 @@ const projectsNames = ["Project One", "Project Two"];
 const ThingsYoullLearn = [
   { name: "Quantum Machine Learning", bgColor: "bg-success" },
   { name: "Learn Machine Learning", bgColor: "maincolor" },
-  // Add more topics as needed
 ];
 
 function HomePage() {
@@ -23,7 +22,7 @@ function HomePage() {
       <div className="row">
         <div className="col-lg-12 p-0 m-0">
           <img
-            src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            src="images/HomePage.png"
             className="position-relative"
             alt="image"
             style={{ width: "100%", height: "500px" }}
@@ -61,22 +60,63 @@ function HomePage() {
 
       {/* Things You'll Learn */}
       <div className="p-5">
-        <div className="text-white">
-          <h2 className="mb-lg-5 text-dark">Things You'll Learn</h2>
-          <div className="container">
-            {ThingsYoullLearn.map((topic, i) => (
-              <div
-                key={i}
-                className={`button-like ${topic.bgColor}`}
-                style={{ margin: "auto" }}
-              >
-                <div className="dot"></div>
-                <div className="name">{topic.name}</div>
-              </div>
-            ))}
+      <div className="text-white">
+        <h2 className="mb-lg-5 text-dark">Things You'll Learn</h2>
+        <div className="container">
+          {/* Learning topics */}
+          <div className="d-flex justify-content-center align-items-center mb-2">
+            {/* Topic 1 */}
+            <div className="button-like bg-success" style={{ margin: 'auto' }}>
+              <div className="dot" style={{ marginLeft: '10px' }}></div>
+              <div className="name">Quantum Machine Learning</div>
+            </div>
+            {/* Topic 2 */}
+            <div className="button-like maincolor" style={{ margin: 'auto' }}>
+              <div className="dot"></div>
+              <div className="name">Learn Machine Learning</div>
+            </div>
+            {/* Topic 3 */}
+            <div className="button-like bg-success" style={{ margin: 'auto' }}>
+              <div className="dot" style={{ marginLeft: '20px' }}></div>
+              <div className="name">Learn NLP</div>
+            </div>
+          </div>
+
+          {/* More learning topics */}
+          <div className="d-flex justify-content-center align-items-center mb-2">
+            {/* Topic 4 */}
+            <div className="button-like maincolor" style={{ marginRight: '7%' }}>
+              <div className="dot"></div>
+              <div className="name">Computer Vision</div>
+            </div>
+            {/* Topic 5 */}
+            <div className="button-like maincolor" style={{ marginLeft: '7%' }}>
+              <div className="dot"></div>
+              <div className="name">AI for Cybersecurity</div>
+            </div>
+          </div>
+
+          {/* Even more learning topics */}
+          <div className="d-flex justify-content-center align-items-center mb-2">
+            {/* Topic 6 */}
+            <div className="button-like bg-success" style={{ margin: 'auto' }}>
+              <div className="dot"></div>
+              <div className="name">AI and Robotics</div>
+            </div>
+            {/* Topic 7 */}
+            <div className="button-like maincolor" style={{ margin: 'auto' }}>
+              <div className="dot"></div>
+              <div className="name">Learn to build a portfolio</div>
+            </div>
+            {/* Topic 8 */}
+            <div className="button-like bg-success" style={{ margin: 'auto' }}>
+              <div className="dot"></div>
+              <div className="name text-center">Reinforcement Learning</div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
 
       {/* Department Members Section */}
       <div className="bg-light">
@@ -175,7 +215,7 @@ function HomePage() {
                 <div className="row">
                   <div className="col-md-6">
                     <img
-                      src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                      src="images/6.png"
                       className="img-fluid"
                       alt="Image"
                       style={{ width: "350px" }}

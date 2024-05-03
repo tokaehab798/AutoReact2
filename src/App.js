@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { ROUTES } from "./constants/routes";
 import WithAuth from "./hoc/withAuth/WithAuth";
