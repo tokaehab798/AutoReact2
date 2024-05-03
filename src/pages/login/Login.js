@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
-import './Login.css'; // Import your CSS file
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Login.css"; // Import your CSS file
+import { login } from "../../services/auth";
+import { parseJwt, persistAuth } from "./loginHelpers";
+import { AuthContext } from "../../context/AuthContext";
+import * as authActionTypes from "../../constants/auth";
+import { PATHS } from "../../constants/paths";
 
 function LoginForm() {
-  const [userID, setUserID] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
+
+  const [userID, setUserID] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
   const handleUserIDChange = (event) => {
     setUserID(event.target.value);
@@ -13,14 +22,35 @@ function LoginForm() {
     setUserPassword(event.target.value);
   };
 
-  const handleSubmit = () => {
-    // Add your login logic here
-    console.log('User ID:', userID);
-    console.log('User Password:', userPassword);
+  const handleSubmit = async () => {
+    const data = {
+      id: userID,
+      password: userPassword,
+    };
+
+    try {
+      const response = await login(data);
+
+      const {
+        data: { token },
+      } = response;
+
+      const user = parseJwt(token);
+      persistAuth(user, token);
+
+      dispatch({
+        type: authActionTypes.LOGIN,
+        payload: { ...user, isAuthenticated: true },
+      });
+
+      navigate(PATHS.home);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
-    <section className="h-50 py-5" style={{ backgroundColor: '#eee' }}>
+    <section className="h-50 py-5" style={{ backgroundColor: "#eee" }}>
       <div className="container py-3 h-100">
         <div className="row justify-content-center align-items-center h-100">
           <div className="col-xl-8">
@@ -34,7 +64,12 @@ function LoginForm() {
                     </div>
                     <form>
                       <div className="mb-3">
-                        <label htmlFor="LoginID" className={`form-label text-muted ${userID.length ? '0' : 'top__ position-relative'}`}>
+                        <label
+                          htmlFor="LoginID"
+                          className={`form-label text-muted ${
+                            userID.length ? "0" : "top__ position-relative"
+                          }`}
+                        >
                           ID
                         </label>
                         <input
@@ -48,7 +83,14 @@ function LoginForm() {
                         />
                       </div>
                       <div className="mb-3">
-                        <label htmlFor="LoginPassword" className={`form-label text-muted ${userPassword.length ? '0' : 'top__ position-relative'}`}>
+                        <label
+                          htmlFor="LoginPassword"
+                          className={`form-label text-muted ${
+                            userPassword.length
+                              ? "0"
+                              : "top__ position-relative"
+                          }`}
+                        >
                           Password
                         </label>
                         <input
@@ -62,17 +104,37 @@ function LoginForm() {
                         />
                       </div>
                       <div className="mb-3 form-check">
-                        <input type="checkbox" name="checkbox" className="form-check-input shadow" id="rememberMe" />
-                        <label htmlFor="rememberMe" className="form-check-label text-muted">Remember Me</label>
+                        <input
+                          type="checkbox"
+                          name="checkbox"
+                          className="form-check-input shadow"
+                          id="rememberMe"
+                        />
+                        <label
+                          htmlFor="rememberMe"
+                          className="form-check-label text-muted"
+                        >
+                          Remember Me
+                        </label>
                       </div>
                       <div className="text-center">
-                        <button className="btn btn-success btn-lg px-4 mb-2" type="button" onClick={handleSubmit}>Login</button>
+                        <button
+                          className="btn btn-success btn-lg px-4 mb-2"
+                          type="button"
+                          onClick={handleSubmit}
+                        >
+                          Login
+                        </button>
                       </div>
                     </form>
                   </div>
                 </div>
                 <div className="col-lg-6 d-flex align-items-center justify-content-center">
-                  <img src="images/login.jpg" alt="Login Image" className="img-fluid rounded" />
+                  <img
+                    src="images/login.jpg"
+                    alt="Login Image"
+                    className="img-fluid rounded"
+                  />
                 </div>
               </div>
             </div>

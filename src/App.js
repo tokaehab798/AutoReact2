@@ -1,22 +1,59 @@
-import { Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { Suspense, useContext, useEffect } from "react";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import * as authActionTypes from "./constants/auth";
 import { ROUTES } from "./constants/routes";
 import WithAuth from "./hoc/withAuth/WithAuth";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import "./App.css";
+import { getAuthenticatedUser } from "./pages/login/loginHelpers";
+import { AuthContext } from "./context/AuthContext";
+import { PATHS } from "./constants/paths";
+import LoginForm from "./pages/login/Login";
 
 const App = () => {
+  const {
+    user: { isAuthenticated },
+    dispatch,
+  } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const authenticatedUser = getAuthenticatedUser();
+
+    if (authenticatedUser) {
+      dispatch({
+        type: authActionTypes.LOGIN,
+        payload: {
+          ...JSON.parse(authenticatedUser),
+          isAuthenticated: true,
+        },
+      });
+    } else {
+      dispatch({ type: authActionTypes.LOGOUT });
+      navigate(PATHS.login);
+    }
+  }, [dispatch, navigate]);
+
+  const returnWhenWrongPath = () => {
+    switch (true) {
+      case isAuthenticated: {
+        return <Navigate to={PATHS.home} />;
+      }
+
+      default:
+        return <></>;
+    }
+  };
+
   return (
     <>
-      <Navbar />
+      {isAuthenticated && <Navbar />}
 
       <Suspense fallback={<span>... loading</span>}>
         <Routes>
-          {
-            // user.isAuthenticated ? (
+          {isAuthenticated ? (
             ROUTES
               // .filter((route) => route.roles?.includes(user.role))
               .map((route, index) => (
@@ -31,16 +68,15 @@ const App = () => {
                   }
                 />
               ))
-            // ) : (
-            //   <Route path={PATHS.login} element={<Login />} />
-            // )
-          }
+          ) : (
+            <Route path={PATHS.login} element={<LoginForm />} />
+          )}
 
-          <Route path="*" element={<>not found</>} />
+          <Route path="*" element={returnWhenWrongPath()} />
         </Routes>
       </Suspense>
 
-      <Footer />
+      {isAuthenticated && <Footer />}
     </>
   );
 };

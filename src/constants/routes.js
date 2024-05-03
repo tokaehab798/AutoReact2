@@ -40,9 +40,9 @@ export const NAVBAR_ROUTES = [
     page: pages.Projects,
     label: "Projects",
   },
- 
+
   {
-    path:  PATHS.form,
+    path: PATHS.form,
     roles: ALL_ROLES,
     page: pages.Form,
     label: "Form",
@@ -51,9 +51,10 @@ export const NAVBAR_ROUTES = [
     path: PATHS.studyplan,
     roles: ALL_ROLES,
     page: pages.Studyplan,
-    label:"Studyplan",
+    label: "Studyplan",
   },
 ];
+
 export const ADDITIONAL_ROUTES = [
   {
     path: "/departmentMember",
@@ -64,7 +65,6 @@ export const ADDITIONAL_ROUTES = [
     path: "/successstory",
     roles: ALL_ROLES,
     page: pages.Successstory,
- 
   },
   {
     path: "/competition",
@@ -75,35 +75,34 @@ export const ADDITIONAL_ROUTES = [
     path: "/project",
     roles: ALL_ROLES,
     page: pages.Project,
-  
   },
   {
-    path:  "/adminform",
+    path: "/adminform",
     roles: ALL_ROLES,
     page: pages.AdminForm,
   },
   {
-    path:  "/doctorform",
+    path: "/doctorform",
     roles: ALL_ROLES,
     page: pages.DoctorForm,
   },
   {
-    path:  "/externaltraining2",
+    path: "/externaltraining2",
     roles: ALL_ROLES,
     page: pages.ExternalTraining2,
   },
   {
-    path:  "/externaltraining",
+    path: "/externaltraining",
     roles: ALL_ROLES,
     page: pages.ExternalTraining,
   },
   {
-    path:  "/internaltraining",
+    path: "/internaltraining",
     roles: ALL_ROLES,
     page: pages.InternalTraining,
   },
   {
-    path:  "/internaltraining2",
+    path: "/internaltraining2",
     roles: ALL_ROLES,
     page: pages.InternalTraining2,
   },
@@ -111,41 +110,39 @@ export const ADDITIONAL_ROUTES = [
     path: "/AdminAddAbout",
     roles: ALL_ROLES,
     page: pages.AdminAddAbout,
-},
-{
-  path: "/adminaddinternal",
-  roles: ALL_ROLES,
-  page: pages.AdminAddInternal,
-},
-{
-  path: "/adminaddexternal",
-  roles: ALL_ROLES,
-  page: pages.AdminAddExternal,
-},
-{
-  path: "/adminaddsuccessstory",
-  roles: ALL_ROLES,
-  page: pages.AdminAddSuccessstory,
-},
-{
-  path: "/adminaddstudyplan",
-  roles: ALL_ROLES,
-  page: pages.AdminAddStudyplan,
-},
-{
-  path: "/adminaddcompetition",
-  roles: ALL_ROLES,
-  page: pages.AdminAddCompetition,
-},
- 
+  },
+  {
+    path: "/adminaddinternal",
+    roles: ALL_ROLES,
+    page: pages.AdminAddInternal,
+  },
+  {
+    path: "/adminaddexternal",
+    roles: ALL_ROLES,
+    page: pages.AdminAddExternal,
+  },
+  {
+    path: "/adminaddsuccessstory",
+    roles: ALL_ROLES,
+    page: pages.AdminAddSuccessstory,
+  },
+  {
+    path: "/adminaddstudyplan",
+    roles: ALL_ROLES,
+    page: pages.AdminAddStudyplan,
+  },
+  {
+    path: "/adminaddcompetition",
+    roles: ALL_ROLES,
+    page: pages.AdminAddCompetition,
+  },
 ];
+
 export const LOGIN_ROUTE = {
-  path: "/login",
+  path: PATHS.login,
   roles: ALL_ROLES,
-  page: pages.Login, 
+  page: pages.Login,
 };
 
-
-
 // all routes
-export const ROUTES = [...NAVBAR_ROUTES,...ADDITIONAL_ROUTES,LOGIN_ROUTE];
+export const ROUTES = [...NAVBAR_ROUTES, ...ADDITIONAL_ROUTES, LOGIN_ROUTE];

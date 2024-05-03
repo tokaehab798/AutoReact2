@@ -1,13 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css"; // Import your CSS file
 import { NAVBAR_ROUTES } from "../../constants/routes";
+import { PATHS } from "../../constants/paths";
+import { clearAuth } from "../../pages/login/loginHelpers";
+import { AuthContext } from "../../context/AuthContext";
+import * as authActionTypes from "../../constants/auth";
 
 function Navbar() {
   const location = useLocation(); // Get the current location using useLocation()
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
+
+  const userLoggedOutHandler = () => {
+    clearAuth();
+    dispatch({ type: authActionTypes.LOGOUT });
+    navigate(PATHS.login);
+  };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top py-4" id="navbar-example2">
+    <nav
+      className="navbar navbar-expand-lg bg-body-tertiary fixed-top py-4"
+      id="navbar-example2"
+    >
       <div className="container">
         <div className="col-auto me-auto">
           <Link to="/" style={{ textDecoration: "none" }}>
@@ -24,7 +39,12 @@ function Navbar() {
             {NAVBAR_ROUTES.map((route, i) => (
               <li className="nav-item" key={i}>
                 <NavLink
-className={`nav-link fs-6 ms-2 ${location.pathname === route.path ? 'active text-white bg-success rounded' : ''}`}                  to={route.path}
+                  className={`nav-link fs-6 ms-2 ${
+                    location.pathname === route.path
+                      ? "active text-white bg-success rounded"
+                      : ""
+                  }`}
+                  to={route.path}
                 >
                   {route.label}
                 </NavLink>
@@ -56,12 +76,12 @@ className={`nav-link fs-6 ms-2 ${location.pathname === route.path ? 'active text
             </li>
           </ul>
           <form className="d-flex">
-            <Link
+            <button
               className="btn btn-outline-success shadow btn text-center"
-              to="/login"
+              onClick={userLoggedOutHandler}
             >
               Log Out
-            </Link>
+            </button>
           </form>
         </div>
       </div>
