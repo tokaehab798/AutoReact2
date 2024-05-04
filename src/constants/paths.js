@@ -14,7 +14,7 @@ export const PATHS = {
   ...NAVBAR_PATHS,
 
   login: "/login",
-  departmentmember: "/departmentmember",
+  departmentmember: (memberId = ":memberId") => `/departmentmember/${memberId}`,
   successstory: (storyId = ":storyId") => `/successstory/${storyId}`,
   competition: (compeId = ":compeId") => `/competition/${compeId}`,
   project: (projId = ":projId") => `/project/${projId}`,
@@ -30,5 +30,6 @@ export const PATHS = {
   adminaddsuccessstory: "/adminaddsuccessstory",
   adminaddstudyplan: "/adminaddstudyplan",
   adminaddcompetition: "/adminaddcompetition",
+  adminAddProject: "/adminAddProject",
   notfound: "/notfound",
 };

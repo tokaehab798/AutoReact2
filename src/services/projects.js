@@ -3,7 +3,7 @@ import { axiosInstance } from "../helpers/axiosConfig";
 
 export const getAllProjects = () => {
   return axiosInstance({
-    url: "/api/v1/projects",
+    url: "/api/v2/projects",
     method: method.GET,
   });
 };

@@ -1,22 +1,32 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import { imageLoadingFailedHandler } from "../../helpers/image";
+import { getAllStaff } from "../../services/staff";
+import { PATHS } from "../../constants/paths";
 
 // Sample data arrays (replace with real data from API or other sources)
-const srcsofdepartment = ["path_to_img1.jpg", "path_to_img2.jpg"];
-const titlesNames = ["Member One", "Member Two"];
-const links = ["/details1", "/details2"];
 
 const srcsofprojects = ["project_img1.jpg", "project_img2.jpg"];
 const projectsNames = ["Project One", "Project Two"];
 
-const ThingsYoullLearn = [
-  { name: "Quantum Machine Learning", bgColor: "bg-success" },
-  { name: "Learn Machine Learning", bgColor: "maincolor" },
-];
-
 function HomePage() {
+  const [allStaff, setAllStaff] = useState([]);
+
+  const fetchAllStaff = useCallback(async () => {
+    try {
+      const response = await getAllStaff();
+      const { data } = response;
+      setAllStaff(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchAllStaff();
+  }, [fetchAllStaff]);
+
   return (
     <section className="text-center position-relative">
       {/* Introduction */}
@@ -62,63 +72,81 @@ function HomePage() {
 
       {/* Things You'll Learn */}
       <div className="p-5">
-      <div className="text-white">
-        <h2 className="mb-lg-5 text-dark">Things You'll Learn</h2>
-        <div className="container">
-          {/* Learning topics */}
-          <div className="d-flex justify-content-center align-items-center mb-2">
-            {/* Topic 1 */}
-            <div className="button-like bg-success" style={{ margin: 'auto' }}>
-              <div className="dot" style={{ marginLeft: '10px' }}></div>
-              <div className="name">Quantum Machine Learning</div>
+        <div className="text-white">
+          <h2 className="mb-lg-5 text-dark">Things You'll Learn</h2>
+          <div className="container">
+            {/* Learning topics */}
+            <div className="d-flex justify-content-center align-items-center mb-2">
+              {/* Topic 1 */}
+              <div
+                className="button-like bg-success"
+                style={{ margin: "auto" }}
+              >
+                <div className="dot" style={{ marginLeft: "10px" }}></div>
+                <div className="name">Quantum Machine Learning</div>
+              </div>
+              {/* Topic 2 */}
+              <div className="button-like maincolor" style={{ margin: "auto" }}>
+                <div className="dot"></div>
+                <div className="name">Learn Machine Learning</div>
+              </div>
+              {/* Topic 3 */}
+              <div
+                className="button-like bg-success"
+                style={{ margin: "auto" }}
+              >
+                <div className="dot" style={{ marginLeft: "20px" }}></div>
+                <div className="name">Learn NLP</div>
+              </div>
             </div>
-            {/* Topic 2 */}
-            <div className="button-like maincolor" style={{ margin: 'auto' }}>
-              <div className="dot"></div>
-              <div className="name">Learn Machine Learning</div>
-            </div>
-            {/* Topic 3 */}
-            <div className="button-like bg-success" style={{ margin: 'auto' }}>
-              <div className="dot" style={{ marginLeft: '20px' }}></div>
-              <div className="name">Learn NLP</div>
-            </div>
-          </div>
 
-          {/* More learning topics */}
-          <div className="d-flex justify-content-center align-items-center mb-2">
-            {/* Topic 4 */}
-            <div className="button-like maincolor" style={{ marginRight: '7%' }}>
-              <div className="dot"></div>
-              <div className="name">Computer Vision</div>
+            {/* More learning topics */}
+            <div className="d-flex justify-content-center align-items-center mb-2">
+              {/* Topic 4 */}
+              <div
+                className="button-like maincolor"
+                style={{ marginRight: "7%" }}
+              >
+                <div className="dot"></div>
+                <div className="name">Computer Vision</div>
+              </div>
+              {/* Topic 5 */}
+              <div
+                className="button-like maincolor"
+                style={{ marginLeft: "7%" }}
+              >
+                <div className="dot"></div>
+                <div className="name">AI for Cybersecurity</div>
+              </div>
             </div>
-            {/* Topic 5 */}
-            <div className="button-like maincolor" style={{ marginLeft: '7%' }}>
-              <div className="dot"></div>
-              <div className="name">AI for Cybersecurity</div>
-            </div>
-          </div>
 
-          {/* Even more learning topics */}
-          <div className="d-flex justify-content-center align-items-center mb-2">
-            {/* Topic 6 */}
-            <div className="button-like bg-success" style={{ margin: 'auto' }}>
-              <div className="dot"></div>
-              <div className="name">AI and Robotics</div>
-            </div>
-            {/* Topic 7 */}
-            <div className="button-like maincolor" style={{ margin: 'auto' }}>
-              <div className="dot"></div>
-              <div className="name">Learn to build a portfolio</div>
-            </div>
-            {/* Topic 8 */}
-            <div className="button-like bg-success" style={{ margin: 'auto' }}>
-              <div className="dot"></div>
-              <div className="name text-center">Reinforcement Learning</div>
+            {/* Even more learning topics */}
+            <div className="d-flex justify-content-center align-items-center mb-2">
+              {/* Topic 6 */}
+              <div
+                className="button-like bg-success"
+                style={{ margin: "auto" }}
+              >
+                <div className="dot"></div>
+                <div className="name">AI and Robotics</div>
+              </div>
+              {/* Topic 7 */}
+              <div className="button-like maincolor" style={{ margin: "auto" }}>
+                <div className="dot"></div>
+                <div className="name">Learn to build a portfolio</div>
+              </div>
+              {/* Topic 8 */}
+              <div
+                className="button-like bg-success"
+                style={{ margin: "auto" }}
+              >
+                <div className="dot"></div>
+                <div className="name text-center">Reinforcement Learning</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
       {/* Department Members Section */}
       <div className="bg-light">
@@ -126,34 +154,36 @@ function HomePage() {
           <h2 className="text-center mb-3">Department Members</h2>
           <div className="underline mb-lg-5 bg-success"></div>
           <div className="row justify-content-center">
-            {srcsofdepartment.map((src, i) => (
-              <div key={i} className="col-3 mb-4 m-md-4">
-                <div className="member-card card fixed-height-card-member">
-                  <img
-                    src={
-                      "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                    }
-                    className="img-fluid card-img-top lazyload img-thumbnail"
-                    alt="Member Image"
-                    style={{ height: "200px" }}
-                    onError={imageLoadingFailedHandler}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title text-center">{titlesNames[i]}</h5>
-                    <Link
-                      to={links[i]}
-                      className="btn btn-success d-block mx-auto"
-                    >
-                      See Details{" "}
-                      <i
-                        className="fa fa-arrow-right ms-2"
-                        style={{ marginTop: "5px" }}
-                      ></i>
-                    </Link>
+            {allStaff
+              .filter((_, index) => index < 3)
+              .map((member) => (
+                <div key={member.user.id} className="col-3 mb-4 m-md-4">
+                  <div className="member-card card fixed-height-card-member">
+                    <img
+                      src={member.profilePicture}
+                      className="img-fluid card-img-top lazyload img-thumbnail"
+                      alt="Member Image"
+                      style={{ height: "200px" }}
+                      onError={imageLoadingFailedHandler}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title text-center">
+                        {member.user.name}
+                      </h5>
+                      <Link
+                        to={PATHS.departmentmember(member.user.id)}
+                        className="btn btn-success d-block mx-auto"
+                      >
+                        See Details{" "}
+                        <i
+                          className="fa fa-arrow-right ms-2"
+                          style={{ marginTop: "5px" }}
+                        ></i>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
           <div className="text-center mt-4">
             <Link

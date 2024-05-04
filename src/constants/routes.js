@@ -1,5 +1,5 @@
 import * as pages from "./pages";
-import { ALL_ROLES } from "./roles";
+import { ADMIN, ALL_ROLES } from "./roles";
 import { PATHS } from "./paths";
 
 // navbar routes
@@ -57,7 +57,7 @@ export const NAVBAR_ROUTES = [
 
 export const ADDITIONAL_ROUTES = [
   {
-    path: PATHS.departmentmember,
+    path: PATHS.departmentmember(),
     roles: ALL_ROLES,
     page: pages.DepartmentMember,
   },
@@ -123,8 +123,13 @@ export const ADDITIONAL_ROUTES = [
   },
   {
     path: PATHS.adminaddsuccessstory,
-    roles: ALL_ROLES,
+    roles: [ADMIN],
     page: pages.AdminAddSuccessstory,
+  },
+  {
+    path: PATHS.adminAddProject,
+    roles: [ADMIN],
+    page: pages.AdminAddProject,
   },
   {
     path: PATHS.adminaddstudyplan,

@@ -3,7 +3,7 @@ import { axiosInstance } from "../helpers/axiosConfig";
 
 export const getExternalTrainingById = (id) => {
   return axiosInstance({
-    url: `/api/v1/externalTrainings/${id}`,
+    url: `/api/v2/externalTrainings/${id}`,
     method: method.GET,
   });
 };

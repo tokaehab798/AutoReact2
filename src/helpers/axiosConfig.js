@@ -6,7 +6,7 @@ import {
   getToken,
 } from "../pages/login/loginHelpers";
 
-export const baseURL = "http://localhost:3000";
+export const baseURL = "https://grad-automation-project-2024.onrender.com";
 
 export const axiosInstance = axios.create({
   baseURL,
