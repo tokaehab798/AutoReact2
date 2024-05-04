@@ -39,11 +39,19 @@ function DepartmentMemberProfile() {
             style={{ width: "100%", height: "600px" }}
           >
             <div style={{ fontSize: "24px" }}>Research paper placeholder</div>
-            {/* 
-                    <div className="research-paper d-flex justify-content-center align-items-center" style={{ width: "100%", height: "600px" }}>
-                        <embed src="../../assets/Researchpaper.pdf" frameBorder="0" style={{ width: "80%", height: "100%" }} sandbox="allow-scripts" readOnly />
-                    </div>
-                    */}
+
+            <div
+              className="research-paper d-flex justify-content-center align-items-center"
+              style={{ width: "100%", height: "600px" }}
+            >
+              <embed
+                src="../../assets/docs/Researchpaper.pdf"
+                frameBorder="0"
+                style={{ width: "80%", height: "100%" }}
+                sandbox="allow-scripts"
+                readOnly
+              />
+            </div>
           </div>
         );
       case "history":

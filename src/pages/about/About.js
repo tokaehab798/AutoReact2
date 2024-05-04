@@ -1,5 +1,6 @@
 import React from "react";
 import "./About.css";
+import { imageLoadingFailedHandler } from "../../helpers/image";
 
 const About = () => {
   const handleGoBack = () => {
@@ -43,6 +44,7 @@ const About = () => {
               src="images/WhatsApp Image 2024-03-09 at 3.10.15 PM (1).jpeg"
               alt="AI Department"
               className="img-fluid department-image"
+              onError={imageLoadingFailedHandler}
             />
           </div>
         </div>
