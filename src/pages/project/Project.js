@@ -1,24 +1,30 @@
-import React from 'react';
-import  "./Project.css"
+import React, { useState, useEffect } from 'react';
+import "./Project.css";
 
 const Project = () => {
-    const srcsofproject = [
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    ];
+    // State to hold project data
+    const [projectData, setProjectData] = useState(null);
 
-    const srcsofprojectteam = [
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    ];
+    // Function to fetch project data from API
+    const fetchProjectData = async () => {
+        try {
+            const response = await fetch('/api/project'); // Assuming the endpoint is '/api/project'
+            const data = await response.json();
+            setProjectData(data[0]); // Assuming the API returns an array and we want the first item
+        } catch (error) {
+            console.error('Error fetching project data:', error);
+        }
+    };
 
-    const srcsofteamname = [
-        "Ziad Algendi",
-        "Abdul-Rahman Al-Jammal",
-        "Asmaa Elsayed"
-    ];
+    // Fetch project data when component mounts
+    useEffect(() => {
+        fetchProjectData();
+    }, []);
+
+    // Render loading message if data is being fetched
+    if (!projectData) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <section className="container">
@@ -35,15 +41,15 @@ const Project = () => {
                     <div className="row justify-content-center">
                         {/* Image Section */}
                         <div className="col-md-4">
-                            <img src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" className="img-fluid" alt="Competition Image" style={{ width: '450px' }} />
+                            <img src={projectData.mainPic} className="img-fluid" alt="Competition Image" style={{ width: '450px' }} />
                         </div>
                         {/* Content Section */}
                         <div className="col-md-8 d-flex align-items-start">
                             <div>
                                 {/* Title */}
-                                <h2>Automated Fruit Harvesting and Classification System using ML</h2>
+                                <h2>{projectData.title}</h2>
                                 {/* Paragraph */}
-                                <p>Embarked on a pioneering project fusing machine learning and robotics to automate fruit classification and sorting. Utilizing a remote ML model, fruits are accurately classified, triggering signals to a robotic arm for seamless picking and sorting into designated bowls. This interdisciplinary endeavor not only pushes the boundaries of AI and robotics but also offers valuable hands-on experience for all participants. Through this innovative synergy of technologies, we've not only accomplished efficient fruit sorting but also gained profound insights into the intersection of machine learning and robotics, paving the way for future advancements in automation and beyond.</p>
+                                <p>{projectData.description}</p>
                             </div>
                         </div>
                     </div>
@@ -54,7 +60,7 @@ const Project = () => {
             <div className="p-3">
                 <div className="container">
                     <div className="row justify-content-center mb-5 container align-items-center">
-                        {srcsofproject.map((src, index) => (
+                        {projectData.additionalPictures.map((src, index) => (
                             <div className="col-md-4" key={index}>
                                 <div className="member">
                                     {/* Image */}
@@ -78,15 +84,15 @@ const Project = () => {
 
                     {/* Team Members */}
                     <div className="d-flex justify-content-center flex-wrap">
-                        {srcsofprojectteam.map((src, index) => (
+                        {projectData.teamMembers.map((member, index) => (
                             <div className="text-center mx-5 mb-3" key={index}>
                                 {/* Team Member Image */}
-                                <img src={src} alt={"Person " + (index + 1)} className="rounded-circle" style={{ width: '170px', height: '170px' }} />
+                                <img src={member.pic} alt={"Person " + (index + 1)} className="rounded-circle" style={{ width: '170px', height: '170px' }} />
                                 {/* Team Member Name */}
                                 <div className="mt-2">
-                                    <h4>{srcsofteamname[index]}</h4>
+                                    <h4>{member.name}</h4>
                                     {/* Team Member Role */}
-                                    <p>Student</p>
+                                    <p>{member.role}</p>
                                 </div>
                             </div>
                         ))}

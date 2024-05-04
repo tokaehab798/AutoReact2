@@ -26,7 +26,7 @@ const AdminAddStudyplan = lazy(() => import("../pages/adminAddStudyplan/AdminAdd
 const AdminAddSuccessstory= lazy(() => import("../pages/adminAddSuccessstory/AdminAddSuccessstory"));
 const AdminAddProject = lazy(() => import("../pages/adminAddProject/AdminAddProject"));
 const AdminAddInternal= lazy(() => import("../pages/adminAddInternal/AdminAddInternal"));
-
+const NotFound= lazy(() => import("../pages/notfound/notFound"));
 
 
 
@@ -34,4 +34,4 @@ const AdminAddInternal= lazy(() => import("../pages/adminAddInternal/AdminAddInt
 
 export { Home, About,DepartmentMembers,DepartmentMember,Successstories,Successstory,Competitions,Competition,Projects,Project
 ,Form,AdminForm,DoctorForm,ExternalTraining,ExternalTraining2,InternalTraining,InternalTraining2,Studyplan,Login,AdminAddAbout,
-AdminAddSuccessstory,AdminAddStudyplan,AdminAddCompetition,AdminAddExternal,AdminAddProject,AdminAddInternal};
+AdminAddSuccessstory,AdminAddStudyplan,AdminAddCompetition,AdminAddExternal,AdminAddProject,AdminAddInternal,NotFound};

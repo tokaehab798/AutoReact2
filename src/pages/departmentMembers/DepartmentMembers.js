@@ -13,9 +13,7 @@ function DepartmentMembers() {
   const fetchAllStaff = useCallback(async () => {
     try {
       const response = await getAllStaff();
-
       const { data } = response;
-
       setAllStaff(data);
     } catch (err) {
       console.error(err);
@@ -27,15 +25,6 @@ function DepartmentMembers() {
   }, [fetchAllStaff]);
 
   console.log(allStaff);
-
-  // Sample data arrays (replace with real data from API or other sources)
-  const srcs = [
-    "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-  ];
-  const names = ["Member One", "Member Two"];
-  const roles = ["Role One", "Role Two"];
-  const links = ["/departmentMember", "/departmentMember"];
 
   return (
     <section className="departments-section p-5" style={{ marginTop: "20px" }}>
@@ -49,20 +38,19 @@ function DepartmentMembers() {
           <div className="col-md-12">
             <h2 className="text-center mb-5">Meet Our Team</h2>
             <div className="row justify-content-center">
-              {srcs.map((src, i) => (
-                <div key={i} className="col-md-3 text-center mb-4">
+              {allStaff.map((member) => (
+                <div key={member._id} className="col-md-3 text-center mb-4">
                   <div className="circle-img">
                     <img
-                      src={src}
-                      alt={`Member ${i + 1}`}
+                      src={member.profilePicture || "placeholder.jpg"}
+                      alt="Profile Picture"
                       className="rounded-circle img-fluid"
                       style={{ width: "250px" }}
                     />
                   </div>
-                  <h5 className="mt-2">{names[i]}</h5>
-                  <p className="mb-0 mt-0">{roles[i]}</p>
+                  <h5 className="mt-2">{member.user.name}</h5>
                   <Link
-                    to={links[i]}
+                    to={`/departmentMember?id=${member._id}`}
                     className="text-success text-decoration-none"
                   >
                     View Profile

@@ -27,7 +27,7 @@ function Navbar() {
         <div className="col-auto me-auto">
           <Link to="/" style={{ textDecoration: "none" }}>
             <img
-              src="images/must logo - no background.png" // Update the path to your logo
+              src="/images/must logo - no background.png" // Update the path to your logo
               alt="image"
               className="navbar-brand"
               style={{ width: "70px", height: "60px" }}

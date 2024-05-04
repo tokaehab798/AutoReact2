@@ -13,7 +13,7 @@ const WithAuth = ({ WrappedComponent, roles }) => {
   if (roles.includes(role) && WrappedComponent) {
     return <AppLayout wrappedComponent={WrappedComponent} />;
   } else {
-    return <Navigate to={PATHS.home} />;
+    return <Navigate to={PATHS.notfound} />;
   }
 };
 

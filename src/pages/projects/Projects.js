@@ -1,24 +1,23 @@
-import React from 'react';
-import "./Projects.css"
+import React, { useCallback, useEffect, useState } from "react";
+import "./Projects.css";
+import { getAllProjects } from "../../services/projects";
 
 const Projects = () => {
-    const srcsofprojects = [
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    ];
-  
-    const projectname = [
-        "Aerated Static composting Device",
-        "Line Following Robot",
-        "Face Recogentation",
-        "Off Road Adventure Robot",
-        "Trashvision project",
-        "Qvoiding obstacle",
-    ];
+    const [allProjects, setAllProjects] = useState([]);
+
+    const fetchAllProjects = useCallback(async () => {
+        try {
+            const response = await getAllProjects();
+            const { data } = response;
+            setAllProjects(data);
+        } catch (err) {
+            console.error(err);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchAllProjects();
+    }, [fetchAllProjects]);
 
     return (
         <section>
@@ -31,17 +30,17 @@ const Projects = () => {
 
                 <div className="row justify-content-center mb-5">
                     {/* Project cards */}
-                    {srcsofprojects.map((src, index) => (
-                        <div className="col-md-4" key={index}>
+                    {allProjects.map((project) => (
+                        <div className="col-md-4" key={project._id}>
                             <div className="member">
                                 {/* Image */}
                                 <div className="d-flex justify-content-center">
-                                    <img src={src} className="img-fluid img-thumbnail" alt={"Image " + (index + 1)} style={{ height: '200px' }} />
+                                    <img src={project.mainPic} className="img-fluid img-thumbnail" alt={project.title} style={{ height: '200px' }} />
                                 </div>
                                 {/* Details */}
                                 <div>
-                                    <h5 className="mt-3" style={{ textAlign: 'center' }}>{projectname[index]}</h5>
-                                    <a href="/project" className="text-decoration-none d-flex justify-content-center align-items-center text-success mb-3">
+                                    <h5 className="mt-3" style={{ textAlign: 'center' }}>{project.title}</h5>
+                                    <a href={`/project?id=${project._id}`} className="text-decoration-none d-flex justify-content-center align-items-center text-success mb-3">
                                         <p className="mb-0">See More Details</p>
                                         <i className="fa fa-arrow-right ms-2" style={{ marginTop: '5px' }}></i>
                                     </a>

@@ -57,84 +57,89 @@ export const NAVBAR_ROUTES = [
 
 export const ADDITIONAL_ROUTES = [
   {
-    path: "/departmentMember",
+    path: PATHS.departmentmember ,
     roles: ALL_ROLES,
     page: pages.DepartmentMember,
   },
   {
-    path: "/successstory",
+    path: PATHS.successstory,
     roles: ALL_ROLES,
     page: pages.Successstory,
   },
   {
-    path: "/competition",
+    path: PATHS.competition,
     roles: ALL_ROLES,
     page: pages.Competition,
   },
   {
-    path: "/project",
+    path: PATHS.project,
     roles: ALL_ROLES,
     page: pages.Project,
   },
   {
-    path: "/adminform",
+    path: PATHS.adminform,
     roles: ALL_ROLES,
     page: pages.AdminForm,
   },
   {
-    path: "/doctorform",
+    path: PATHS.doctorform,
     roles: ALL_ROLES,
     page: pages.DoctorForm,
   },
   {
-    path: "/externaltraining2",
+    path: PATHS.externaltraining2 ,
     roles: ALL_ROLES,
     page: pages.ExternalTraining2,
   },
   {
-    path: "/externaltraining",
+    path: PATHS.externaltraining ,
     roles: ALL_ROLES,
     page: pages.ExternalTraining,
   },
   {
-    path: "/internaltraining",
+    path: PATHS.internaltraining,
     roles: ALL_ROLES,
     page: pages.InternalTraining,
   },
   {
-    path: "/internaltraining2",
+    path: PATHS.internaltraining2,
     roles: ALL_ROLES,
     page: pages.InternalTraining2,
   },
   {
-    path: "/AdminAddAbout",
+    path: PATHS.AdminAddAbout,
     roles: ALL_ROLES,
     page: pages.AdminAddAbout,
   },
   {
-    path: "/adminaddinternal",
+    path: PATHS.adminaddinternal,
     roles: ALL_ROLES,
     page: pages.AdminAddInternal,
   },
   {
-    path: "/adminaddexternal",
+    path: PATHS.adminaddexternal,
     roles: ALL_ROLES,
     page: pages.AdminAddExternal,
   },
   {
-    path: "/adminaddsuccessstory",
+    path: PATHS.adminaddsuccessstory,
     roles: ALL_ROLES,
     page: pages.AdminAddSuccessstory,
   },
   {
-    path: "/adminaddstudyplan",
+    path: PATHS.adminaddstudyplan ,
     roles: ALL_ROLES,
     page: pages.AdminAddStudyplan,
   },
   {
-    path: "/adminaddcompetition",
+    path: PATHS.adminaddcompetition,
     roles: ALL_ROLES,
     page: pages.AdminAddCompetition,
+  },
+  {
+    path: PATHS.notfound,
+    roles: ALL_ROLES,
+    page: pages.NotFound,
   },
 ];
 

@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom'; // Import useParams hook to access route parameters
 import "./Successstory.css"; // Import your CSS file for styling
+import { getSuccessStoryById } from '../../services/successstory'; // Import your API service function
 
 const SuccessStory = () => {
-    const srcsofprojects = ["project1.jpg", "project2.jpg", "project3.jpg"]; // Assuming you have an array of image sources
-    const compmember = ["member1.jpg", "member2.jpg", "member3.jpg"]; // Assuming you have an array of team member image sources
-    const compName = ["Name 1", "Name 2", "Name 3"]; // Assuming you have an array of team member names
+    const { id } = useParams(); // Get the ID from the route parameters
+    const [successStory, setSuccessStory] = useState(null); // State to hold success story data
+
+    useEffect(() => {
+        const fetchSuccessStory = async () => {
+            try {
+                const response = await getSuccessStoryById(id); // Fetch success story data by ID
+                setSuccessStory(response.data); // Update state with fetched data
+            } catch (error) {
+                console.error('Error fetching success story details:', error);
+            }
+        };
+
+        fetchSuccessStory();
+    }, [id]); // Fetch data whenever the ID changes
+
+    if (!successStory) {
+        return <div>Loading...</div>; // Render loading message while data is being fetched
+    }
 
     return (
         <section className="container">
-               <div className="go-back-container" style={{ marginLeft: "20px" }}>
+            {/* Go Back Link */}
+            <div className="go-back-container" style={{ marginLeft: "20px" }}>
                 <a className="go-back-link" onClick={() => window.history.back()}>
                     <i className="fas fa-arrow-left"></i> Go Back
                 </a>
@@ -19,17 +38,15 @@ const SuccessStory = () => {
                     <div className="row justify-content-center align-items-center">
                         {/* Image Section */}
                         <div className="col-md-4">
-                            <img src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" className="img-fluid" alt="Success Story Image" style={{ width: '450px' }} />
+                            <img src={successStory.mainPicture} className="img-fluid" alt="Success Story Image" style={{ width: '450px' }} />
                         </div>
                         {/* Content Section */}
                         <div className="col-md-8 d-flex align-items-center">
                             <div>
                                 {/* Title */}
-                                <h2>AWS Climathon hackathon Success Story</h2>
-                                {/* Award */}
-                                <h5>1'st place</h5>
-                                {/* Paragraph */}
-                                <p>The AWS Climathon hackathon held in 2022 at Misr University in Egypt provided a platform for passionate innovators to address pressing climate challenges using cutting-edge technology. Participants collaborated to develop innovative solutions leveraging Amazon Web Services (AWS) to tackle issues such as environmental sustainability, renewable energy, and climate resilience. Through this hackathon, aspiring entrepreneurs, engineers, and environmentalists came together to ideate, prototype, and present solutions aimed at making a positive impact on the environment. The event fostered creativity, collaboration, and technological advancement in the pursuit of a more sustainable future for Egypt and beyond.</p>
+                                <h2>{successStory.title}</h2>
+                                {/* Description */}
+                                <p>{successStory.description}</p>
                             </div>
                         </div>
                     </div>
@@ -39,7 +56,7 @@ const SuccessStory = () => {
             {/* Picture Section */}
             <div className="p-3">
                 <div className="row justify-content-center mb-5 container align-items-center">
-                    {srcsofprojects.map((src, index) => (
+                    {successStory.additionalPictures.map((src, index) => (
                         <div className="col-md-4" key={index}>
                             <div className="member">
                                 {/* Image */}
@@ -53,9 +70,11 @@ const SuccessStory = () => {
             </div>
 
             {/* Video Section */}
-            <div style={{ width: '100%', height: 0, paddingBottom: '56.25%', position: 'relative', marginBottom: '-25%' }}>
-                <iframe src="https://www.youtube.com/embed/zJx_AujshZY" style={{ position: 'absolute', width: '100%', height: '50%', top: 0, left: 0 }} frameBorder="0" allowFullScreen></iframe>
-            </div>
+            {successStory.video && (
+                <div style={{ width: '100%', height: 0, paddingBottom: '56.25%', position: 'relative', marginBottom: '-25%' }}>
+                    <iframe src={successStory.video} style={{ position: 'absolute', width: '100%', height: '50%', top: 0, left: 0 }} frameBorder="0" allowFullScreen></iframe>
+                </div>
+            )}
 
             {/* Team Members Section */}
             <div className="">
@@ -67,13 +86,13 @@ const SuccessStory = () => {
 
                     {/* Team Members */}
                     <div className="d-flex justify-content-center flex-wrap">
-                        {compmember.map((src, index) => (
+                        {successStory.teamMembers.map((member, index) => (
                             <div className="text-center mx-5 mb-3" key={index}>
                                 {/* Team Member Image */}
-                                <img src={src} className="rounded-circle" alt={"Person " + (index + 1)} style={{ width: '170px', height: '170px' }} />
+                                <img src={member.picture} className="rounded-circle" alt={"Person " + (index + 1)} style={{ width: '170px', height: '170px' }} />
                                 {/* Team Member Name */}
                                 <div className="mt-2">
-                                    <h4>{compName[index]}</h4>
+                                    <h4>{member.name}</h4>
                                     {/* Team Member Role */}
                                     <p>Student</p>
                                 </div>
