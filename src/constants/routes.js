@@ -57,12 +57,12 @@ export const NAVBAR_ROUTES = [
 
 export const ADDITIONAL_ROUTES = [
   {
-    path: PATHS.departmentmember ,
+    path: PATHS.departmentmember,
     roles: ALL_ROLES,
     page: pages.DepartmentMember,
   },
   {
-    path: PATHS.successstory,
+    path: PATHS.successstory(),
     roles: ALL_ROLES,
     page: pages.Successstory,
   },
@@ -87,12 +87,12 @@ export const ADDITIONAL_ROUTES = [
     page: pages.DoctorForm,
   },
   {
-    path: PATHS.externaltraining2 ,
+    path: PATHS.externaltraining2,
     roles: ALL_ROLES,
     page: pages.ExternalTraining2,
   },
   {
-    path: PATHS.externaltraining ,
+    path: PATHS.externaltraining,
     roles: ALL_ROLES,
     page: pages.ExternalTraining,
   },
@@ -127,7 +127,7 @@ export const ADDITIONAL_ROUTES = [
     page: pages.AdminAddSuccessstory,
   },
   {
-    path: PATHS.adminaddstudyplan ,
+    path: PATHS.adminaddstudyplan,
     roles: ALL_ROLES,
     page: pages.AdminAddStudyplan,
   },
