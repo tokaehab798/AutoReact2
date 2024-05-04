@@ -3,8 +3,7 @@ import { axiosInstance } from "../helpers/axiosConfig";
 
 export const getCompetitionById = (id) => {
   return axiosInstance({
-    url: `/api/v1/competitions/${id}`,
+    url: `/api/v2/competitions/${id}`,
     method: method.GET,
-
   });
 };

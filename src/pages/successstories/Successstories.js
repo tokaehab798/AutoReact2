@@ -1,11 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "./Successstories.css"; // Make sure to import your CSS file if needed
 import { getAllSuccessStories } from "../../services/successstories";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../constants/paths";
 import { imageLoadingFailedHandler } from "../../helpers/image";
+import { AuthContext } from "../../context/AuthContext";
+import { ADMIN } from "../../constants/roles";
+import { deleteSuccessStoryById } from "../../services/successstory";
 
 const MyComponent = () => {
+  const {
+    user: { role },
+  } = useContext(AuthContext);
+
   const [allSuccessStories, setAllSuccessStories] = useState([]);
 
   const fetchAllSuccessStories = useCallback(async () => {
@@ -22,38 +29,79 @@ const MyComponent = () => {
     fetchAllSuccessStories();
   }, [fetchAllSuccessStories]);
 
+  const handleDeleteSuccessStory = async (id) => {
+    try {
+      await deleteSuccessStoryById(id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <section className="p-5">
       <div className="container">
-        {allSuccessStories.map((story) => (
-          <div
-            key={story._id}
-            className="card"
-            style={{ width: "18rem", marginBottom: "20px" }}
-          >
-            <img
-              src={story.mainPicture}
-              className="card-img-top"
-              alt="Story Main Picture"
-              onError={imageLoadingFailedHandler}
-            />
-            <div className="card-body">
-              <h5 className="card-title">{story.title}</h5>
-              <p className="card-text">{story.description}</p>
-
-              <Link
-                to={PATHS.successstory(story._id)}
-                className="text-decoration-none d-flex justify-content-start align-items-center text-success"
+        <div className="row">
+          <div className="col-md-4 mb-3">
+            {allSuccessStories.map((story) => (
+              <div
+                key={story._id}
+                className="card"
+                style={{ width: "18rem", marginBottom: "20px" }}
               >
-                <p className="mb-0">See More Details</p>
-                <i
-                  className="fa fa-arrow-right ms-2"
-                  style={{ marginTop: "5px" }}
-                ></i>
-              </Link>
+                <img
+                  src={story.mainPicture.secure_url}
+                  className="card-img-top"
+                  alt="Story Main Picture"
+                  onError={imageLoadingFailedHandler}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{story.title}</h5>
+                  <p className="card-text">{story.description}</p>
+
+                  <div className="d-flex justify-content-between">
+                    <Link
+                      to={PATHS.successstory(story._id)}
+                      className="text-decoration-none d-flex justify-content-start align-items-center text-success"
+                    >
+                      <p className="mb-0">See More Details</p>
+                      <i
+                        className="fa fa-arrow-right ms-2"
+                        style={{ marginTop: "5px" }}
+                      ></i>
+                    </Link>
+
+                    {role === ADMIN && (
+                      <button
+                        className="btn btn-danger btn-sm position-absolute bottom-0 end-0 mb-3 me-3"
+                        onClick={() => handleDeleteSuccessStory(story._id)}
+                      >
+                        <i className="fa fa-trash"></i>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="col-md-4 mb-3">
+            <div
+              className="card position-relative"
+              style={{ width: "288px", height: "435.45px" }}
+            >
+              <div className="card-body d-flex justify-content-center align-items-center bg-body-tertiary">
+                <Link
+                  to={PATHS.adminaddsuccessstory}
+                  style={{ textDecoration: "none" }}
+                >
+                  <div className="circle-content position-relative">
+                    <i className="fa fa-plus fa-3x text-white position-relative"></i>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );

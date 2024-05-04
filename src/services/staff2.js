@@ -3,7 +3,7 @@ import { axiosInstance } from "../helpers/axiosConfig";
 
 export const getStaffById = (id) => {
   return axiosInstance({
-    url: `/api/v1/staff/${id}`,
+    url: `/api/v2/staff/${id}`,
     method: method.GET,
   });
 };
