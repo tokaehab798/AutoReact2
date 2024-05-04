@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import "./AdminForm.css"
+import { imageLoadingFailedHandler } from '../../helpers/image';
 
 function AdminForm() {
     const [srcsofforms, setSrcsOfForms] = useState([
@@ -46,7 +47,7 @@ function AdminForm() {
                         <div className="row p-3 bg-light align-items-center forms-row rounded" key={index}>
                             <div className="col-lg-4">
                                 <div className="d-flex justify-content-center align-items-center">
-                                    <img src={form.src} alt="" style={{ width: form.imageWidth }} className="img-fluid" />
+                                    <img src={form.src} alt="" style={{ width: form.imageWidth }} className="img-fluid" onError={imageLoadingFailedHandler} />
                                 </div>
                             </div>
                             <div className="col-lg-8">

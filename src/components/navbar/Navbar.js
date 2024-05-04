@@ -6,6 +6,7 @@ import { PATHS } from "../../constants/paths";
 import { clearAuth } from "../../pages/login/loginHelpers";
 import { AuthContext } from "../../context/AuthContext";
 import * as authActionTypes from "../../constants/auth";
+import { imageLoadingFailedHandler } from "../../helpers/image";
 
 function Navbar() {
   const location = useLocation(); // Get the current location using useLocation()
@@ -31,6 +32,7 @@ function Navbar() {
               alt="image"
               className="navbar-brand"
               style={{ width: "70px", height: "60px" }}
+              onError={imageLoadingFailedHandler}
             />
           </Link>
         </div>
@@ -68,9 +70,9 @@ function Navbar() {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/externaltraining">
+                  <NavLink className="dropdown-item" to={PATHS.externaltraining2} >
                     External Training
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </li>

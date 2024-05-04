@@ -67,12 +67,12 @@ export const ADDITIONAL_ROUTES = [
     page: pages.Successstory,
   },
   {
-    path: PATHS.competition,
+    path: PATHS.competition(),
     roles: ALL_ROLES,
     page: pages.Competition,
   },
   {
-    path: PATHS.project,
+    path: PATHS.project(),
     roles: ALL_ROLES,
     page: pages.Project,
   },
@@ -92,7 +92,7 @@ export const ADDITIONAL_ROUTES = [
     page: pages.ExternalTraining2,
   },
   {
-    path: PATHS.externaltraining,
+    path: PATHS.externaltraining(),
     roles: ALL_ROLES,
     page: pages.ExternalTraining,
   },
@@ -102,7 +102,7 @@ export const ADDITIONAL_ROUTES = [
     page: pages.InternalTraining,
   },
   {
-    path: PATHS.internaltraining2,
+    path: PATHS.internaltraining2(),
     roles: ALL_ROLES,
     page: pages.InternalTraining2,
   },

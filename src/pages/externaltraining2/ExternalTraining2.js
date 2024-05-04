@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./ExternalTraining2.css";
 import { getAllExternalTrainings } from '../../services/externaltrainings';
+import { imageLoadingFailedHandler } from "../../helpers/image";
+import { Link } from 'react-router-dom';
+import { PATHS } from "../../constants/paths";
 
 function ExternalTraining2() {
     const [allExternalTrainings, setAllExternalTrainings] = useState([]);
@@ -31,7 +34,7 @@ function ExternalTraining2() {
                             <div className="card shadow" style={{ width: '20rem' }}>
                                 {/* Training item image */}
                                 <div style={{ height: '200px', overflow: 'hidden' }}>
-                                    <img src={training.trainingPic} className="card-img-top" alt="Training" style={{ objectFit: 'cover', height: '100%' }} />
+                                    <img src={training.trainingPic} className="card-img-top" alt="Training" style={{ objectFit: 'cover', height: '100%' }} onError={imageLoadingFailedHandler} />
                                 </div>
                                 {/* Card body */}
                                 <div className="card-body">
@@ -39,10 +42,10 @@ function ExternalTraining2() {
                                     <h4 className="card-title">{training.title}</h4>
                                     {/* Training item description */}
                                     <p className="card-text">{training.description}</p>
-                                    <a href={`/externaltraining2?id=${training._id}`} className="text-decoration-none d-flex justify-content-center align-items-center text-success mb-3">
+                                    <Link to={PATHS.externaltraining(training._id)} className="text-decoration-none d-flex justify-content-center align-items-center text-success mb-3">
                                         <p className="mb-0">See More Details</p>
                                         <i className="fa fa-arrow-right ms-2" style={{ marginTop: '5px' }}></i>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

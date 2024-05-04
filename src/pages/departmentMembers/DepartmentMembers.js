@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./DepartmentMembers.css";
 import { getAllStaff } from "../../services/staff";
+import { imageLoadingFailedHandler } from "../../helpers/image";
 
 function DepartmentMembers() {
   const handleGoBack = () => {
@@ -46,6 +47,7 @@ function DepartmentMembers() {
                       alt="Profile Picture"
                       className="rounded-circle img-fluid"
                       style={{ width: "250px" }}
+                      onError={imageLoadingFailedHandler}
                     />
                   </div>
                   <h5 className="mt-2">{member.user.name}</h5>

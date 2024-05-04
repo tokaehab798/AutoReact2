@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./DepartmentMember.css";
+import { imageLoadingFailedHandler } from "../../helpers/image";
 
 function DepartmentMemberProfile() {
   const [activeTab, setActiveTab] = useState("subjects");
@@ -38,14 +39,13 @@ function DepartmentMemberProfile() {
             className="research-paper d-flex justify-content-center align-items-center"
             style={{ width: "100%", height: "600px" }}
           >
-            <div style={{ fontSize: "24px" }}>Research paper placeholder</div>
 
             <div
               className="research-paper d-flex justify-content-center align-items-center"
               style={{ width: "100%", height: "600px" }}
             >
               <embed
-                src="../../assets/docs/Researchpaper.pdf"
+                src="/images/Researchpaper.pdf"
                 frameBorder="0"
                 style={{ width: "80%", height: "100%" }}
                 sandbox="allow-scripts"
@@ -119,6 +119,7 @@ function DepartmentMemberProfile() {
                 src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                 alt="Member 1"
                 className="rounded-circle img-fluid"
+                onError={imageLoadingFailedHandler}
               />
             </div>
             <h4>Rania ElGohary</h4>

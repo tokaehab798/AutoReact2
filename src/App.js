@@ -39,7 +39,7 @@ const App = () => {
   const returnWhenWrongPath = () => {
     switch (true) {
       case isAuthenticated: {
-        return <Navigate to={PATHS.home} />;
+        return <Navigate to={PATHS.notfound} />;
       }
 
       default:

@@ -1,5 +1,6 @@
 import React from 'react';
 import "./DoctorForm.css"
+import { imageLoadingFailedHandler } from '../../helpers/image';
 
 function DoctorForm() {
     return (
@@ -11,7 +12,7 @@ function DoctorForm() {
                             {/* Image Column */}
                             <div className="col-3">
                                 <div className="d-flex justify-content-center align-items-center">
-                                    <img src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" alt="" width="200px" />
+                                    <img src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" alt="" width="200px" onError={imageLoadingFailedHandler} />
                                 </div>
                             </div>
                             <div className="col-1"></div>

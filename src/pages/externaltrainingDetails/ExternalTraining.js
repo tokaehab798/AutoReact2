@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Assuming you are using react-router-dom
 import { getExternalTrainingById } from '../../services/externaltraining';
 import "./ExternalTraining.css";
+import { imageLoadingFailedHandler } from '../../helpers/image';
 
 const handleGoBack = () => {
   window.history.back();
 };
 
 function ExternalTraining() {
-  const { id } = useParams();
-  const [externalTraining, setExternalTraining] = useState(null);
+  const { ExtId:id } = useParams();
+  const [externalTraining, setExternalTraining] = useState([]);
 
   useEffect(() => {
     const fetchExternalTraining = async () => {
@@ -42,7 +43,7 @@ function ExternalTraining() {
         <div className="row justify-content-center">
           {/* Image Section */}
           <div className="col-md-5">
-            <img src={externalTraining.trainingPic} className="img-fluid rounded-1" alt="Training Image" style={{ width: '450px' }} />
+            <img src={externalTraining.trainingPic} className="img-fluid rounded-1" alt="Training Image" style={{ width: '450px' }} onError={imageLoadingFailedHandler} />
           </div>
           {/* Content Section */}
           <div className="col-md-7 d-flex align-items-center">

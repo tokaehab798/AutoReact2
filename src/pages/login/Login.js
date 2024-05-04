@@ -6,6 +6,7 @@ import { parseJwt, persistAuth } from "./loginHelpers";
 import { AuthContext } from "../../context/AuthContext";
 import * as authActionTypes from "../../constants/auth";
 import { PATHS } from "../../constants/paths";
+import { imageLoadingFailedHandler } from "../../helpers/image";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -134,6 +135,7 @@ function LoginForm() {
                     src="images/login.jpg"
                     alt="Login Image"
                     className="img-fluid rounded"
+                    onError={imageLoadingFailedHandler}
                   />
                 </div>
               </div>

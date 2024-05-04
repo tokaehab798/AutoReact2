@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import { imageLoadingFailedHandler } from "../../helpers/image";
 
 // Sample data arrays (replace with real data from API or other sources)
 const srcsofdepartment = ["path_to_img1.jpg", "path_to_img2.jpg"];
@@ -26,6 +27,7 @@ function HomePage() {
             className="position-relative"
             alt="image"
             style={{ width: "100%", height: "500px" }}
+            onError={imageLoadingFailedHandler}
           />
           <h1
             className="position-absolute text-white"
@@ -134,6 +136,7 @@ function HomePage() {
                     className="img-fluid card-img-top lazyload img-thumbnail"
                     alt="Member Image"
                     style={{ height: "200px" }}
+                    onError={imageLoadingFailedHandler}
                   />
                   <div className="card-body">
                     <h5 className="card-title text-center">{titlesNames[i]}</h5>
@@ -178,6 +181,7 @@ function HomePage() {
                   className="img-fluid card-img-top lazyload img-thumbnail"
                   alt="Project Image"
                   style={{ height: "200px" }}
+                  onError={imageLoadingFailedHandler}
                 />
                 <div className="card-body">
                   <h5 className="card-title">{projectsNames[i]}</h5>
@@ -219,6 +223,7 @@ function HomePage() {
                       className="img-fluid"
                       alt="Image"
                       style={{ width: "350px" }}
+                      onError={imageLoadingFailedHandler}
                     />
                   </div>
                   <div className="col-md-6 d-flex align-items-center">

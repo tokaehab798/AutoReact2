@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom"; 
 import "./Project.css";
+import { imageLoadingFailedHandler } from '../../helpers/image';
+import { getProjectById } from '../../services/project';
 
 const Project = () => {
+    const { projId: id } = useParams();
+    
     // State to hold project data
     const [projectData, setProjectData] = useState(null);
 
-    // Function to fetch project data from API
-    const fetchProjectData = async () => {
-        try {
-            const response = await fetch('/api/project'); // Assuming the endpoint is '/api/project'
-            const data = await response.json();
-            setProjectData(data[0]); // Assuming the API returns an array and we want the first item
-        } catch (error) {
-            console.error('Error fetching project data:', error);
-        }
-    };
-
-    // Fetch project data when component mounts
     useEffect(() => {
-        fetchProjectData();
-    }, []);
+        const fetchProject = async () => {
+            try {
+                const response = await getProjectById(id);
+                setProjectData(response.data);
+            } catch (error) {
+                console.error('Error fetching project details:', error);
+            }
+        };
 
-    // Render loading message if data is being fetched
+        fetchProject();
+    }, [id]);
+  
     if (!projectData) {
         return <div>Loading...</div>;
     }
@@ -35,20 +36,20 @@ const Project = () => {
                 </a>
             </div>
 
-            {/* Competition Section */}
+            {/* Project Section */}
             <div className="p-5">
                 <div className="container">
                     <div className="row justify-content-center">
                         {/* Image Section */}
                         <div className="col-md-4">
-                            <img src={projectData.mainPic} className="img-fluid" alt="Competition Image" style={{ width: '450px' }} />
+                            <img src={projectData.mainPic} className="img-fluid" alt="Project Image" style={{ width: '450px' }} onError={imageLoadingFailedHandler}/>
                         </div>
                         {/* Content Section */}
                         <div className="col-md-8 d-flex align-items-start">
                             <div>
                                 {/* Title */}
                                 <h2>{projectData.title}</h2>
-                                {/* Paragraph */}
+                                {/* Description */}
                                 <p>{projectData.description}</p>
                             </div>
                         </div>
@@ -56,7 +57,7 @@ const Project = () => {
                 </div>
             </div>
 
-            {/* Picture Section */}
+            {/* Additional Pictures Section */}
             <div className="p-3">
                 <div className="container">
                     <div className="row justify-content-center mb-5 container align-items-center">
@@ -65,7 +66,7 @@ const Project = () => {
                                 <div className="member">
                                     {/* Image */}
                                     <div className="d-flex justify-content-center">
-                                        <img src={src} className="img-fluid" alt="Project Image" style={{ width: '300px' }} />
+                                        <img src={src} className="img-fluid" alt="Project Image" style={{ width: '300px' }} onError={imageLoadingFailedHandler}/>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +88,7 @@ const Project = () => {
                         {projectData.teamMembers.map((member, index) => (
                             <div className="text-center mx-5 mb-3" key={index}>
                                 {/* Team Member Image */}
-                                <img src={member.pic} alt={"Person " + (index + 1)} className="rounded-circle" style={{ width: '170px', height: '170px' }} />
+                                <img src={member.pic} alt={"Person " + (index + 1)} className="rounded-circle" style={{ width: '170px', height: '170px' }} onError={imageLoadingFailedHandler} />
                                 {/* Team Member Name */}
                                 <div className="mt-2">
                                     <h4>{member.name}</h4>

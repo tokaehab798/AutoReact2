@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './InternalTraining2.css';
 import { getInternalTrainingById } from '../../services/internaltraining2';
-
+import { imageLoadingFailedHandler } from '../../helpers/image';
 
 function InternalTraining2() {
-  const { id } = useParams();
-  const [internaltraining, setInternalTraining] = useState([]);
-console.log(id);
+  const { interId: id } = useParams();
+  const [internalTraining, setInternalTraining] = useState(null);
+
   useEffect(() => {
     const fetchInternalTraining = async () => {
       try {
-        const response = await getInternalTrainingById(id)
+        const response = await getInternalTrainingById(id);
         setInternalTraining(response.data);
       } catch (error) {
         console.error('Error fetching internal training details:', error);
@@ -21,7 +21,7 @@ console.log(id);
     fetchInternalTraining();
   }, [id]);
 
-  if (!internaltraining) {
+  if (!internalTraining) {
     return <div>Loading...</div>;
   }
 
@@ -39,29 +39,30 @@ console.log(id);
             {/* Image Section */}
             <div className="col-md-5">
               <img
-                src={internaltraining.trainingPicture}
+                src={internalTraining.trainingPicture}
                 className="img-fluid rounded-1"
                 alt="Internal Training Image"
                 style={{ width: '450px' }}
+                onError={imageLoadingFailedHandler}
               />
             </div>
             {/* Content Section */}
             <div className="col-md-5 d-flex align-items-center">
               <div>
                 {/* Title */}
-                <h2>{internaltraining.title}</h2>
+                <h2>{internalTraining.title}</h2>
                 {/* Paragraph */}
-                <p>{internaltraining.description}</p>
+                <p>{internalTraining.description}</p>
                 {/* Line containing start date, end date, and link */}
                 <div>
                   <p className="mb-0">
                     <strong>Starts From:</strong>{' '}
-                    <span className="text-secondary">{internaltraining.startsFrom}</span>
+                    <span className="text-secondary">{internalTraining.startsFrom}</span>
                   </p>
                   <div className="d-flex justify-content-between ">
                     <p className="me-5">
                       <strong>Ends At:</strong>{' '}
-                      <span className="text-secondary">{internaltraining.endsAt}</span>
+                      <span className="text-secondary">{internalTraining.endsAt}</span>
                     </p>
                     <button className="btn btn-success ">Apply</button>
                   </div>
@@ -78,7 +79,7 @@ console.log(id);
           <h4 className="text-center mb-5">What you'll Learn</h4>
           <div className="row justify-content-center">
             <div className="col-md-10">
-              {internaltraining.whatYouWillLearn.map((item, index) => (
+              {internalTraining.whatYouWillLearn.map((item, index) => (
                 <section key={index} className="mb-4 d-flex">
                   <i className="fa-solid fa-check text-success me-3"></i>
                   <p>{item}</p>
@@ -94,18 +95,26 @@ console.log(id);
         <h4 className="text-center mb-5 fw-bold">Training Instructor</h4>
         <div className="row justify-content-start">
           <div className="col-md-9">
-            <div className="d-flex align-items-center">
-              {/* Image without circular shape */}
-              <div className="overflow-hidden me-3" style={{ width: '200px', height: '200px' }}>
-                <img src={internaltraining.teachingInstructor.profilePicture} alt="Instructor" className="w-100 h-100" style={{ height: '100%' }} />
+            {internalTraining.teachingInstructor.map((instructor, index) => (
+              <div key={index} className="d-flex align-items-center mb-4">
+                {/* Image without circular shape */}
+                <div className="overflow-hidden me-3" style={{ width: '200px', height: '200px' }}>
+                  <img
+                    src={instructor.profilePicture}
+                    alt="Instructor"
+                    className="w-100 h-100"
+                    style={{ height: '100%' }}
+                    onError={imageLoadingFailedHandler}
+                  />
+                </div>
+                {/* Instructor name and brief description */}
+                <div>
+                  <h5 className="fw-bold">{instructor.name}</h5>
+                  <h6 className="text-muted">{instructor.title}</h6>
+                  <p>{instructor.description}</p>
+                </div>
               </div>
-              {/* Instructor name and brief description */}
-              <div>
-                <h5 className="fw-bold">{internaltraining.teachingInstructor.name}</h5>
-                <h6 className="text-muted">{internaltraining.teachingInstructor.role}</h6>
-                {/* Add additional details if available */}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

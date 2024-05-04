@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"; // Import useParams hook to access route parameters
 import "./Successstory.css"; // Import your CSS file for styling
 import { getSuccessStoryById } from "../../services/successstory"; // Import your API service function
+import { imageLoadingFailedHandler } from "../../helpers/image";
 
 const SuccessStory = () => {
   const { storyId: id } = useParams(); // Get the ID from the route parameters
@@ -44,6 +45,7 @@ const SuccessStory = () => {
                 className="img-fluid"
                 alt="Success Story Image"
                 style={{ width: "450px" }}
+                onError={imageLoadingFailedHandler}
               />
             </div>
             {/* Content Section */}
@@ -72,6 +74,7 @@ const SuccessStory = () => {
                     className="img-fluid"
                     alt="Project Image"
                     style={{ width: "350px" }}
+                    onError={imageLoadingFailedHandler}
                   />
                 </div>
               </div>
@@ -124,6 +127,7 @@ const SuccessStory = () => {
                   className="rounded-circle"
                   alt={"Person " + (index + 1)}
                   style={{ width: "170px", height: "170px" }}
+                  onError={imageLoadingFailedHandler}
                 />
                 {/* Team Member Name */}
                 <div className="mt-2">

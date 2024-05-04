@@ -2,15 +2,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getCompetitionById } from "../../services/competition";
+import { imageLoadingFailedHandler } from "../../helpers/image";
+
 
 const MyComponent = () => {
-  const { id } = useParams();
-  const [competition, setCompetition] = useState(null);
+  const { compeId:id } = useParams();
+  const [competition, setCompetition] = useState([]);
 
   useEffect(() => {
     const fetchCompetition = async () => {
       try {
-        const response = await getCompetitionById();
+        const response = await getCompetitionById(id);
         setCompetition(response.data);
       } catch (error) {
         console.error('Error fetching competition details:', error);
@@ -34,7 +36,7 @@ const MyComponent = () => {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-5">
-            <img src={competition.competitionPic} className="img-fluid rounded-1" alt="Competition Image" style={{ width: '450px' }} />
+            <img src={competition.competitionPic} className="img-fluid rounded-1" alt="Competition Image" style={{ width: '450px' }}  onError={imageLoadingFailedHandler} />
           </div>
           <div className="col-md-7 d-flex align-items-center">
             <div>

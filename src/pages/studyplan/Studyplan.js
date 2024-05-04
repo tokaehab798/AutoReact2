@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Studyplan.css'; // Import your CSS file
+import { imageLoadingFailedHandler } from '../../helpers/image';
 
 function Gallery() {
   const [flag, setFlag] = useState(true);
@@ -26,7 +27,7 @@ function Gallery() {
           {srcs.map((src, index) => (
             <div className="col-6" key={index}>
               <div className="rounded-3 position-relative overflow-hidden">
-                <img className="img-fluid rounded" src={src} alt="" />
+                <img className="img-fluid rounded" src={src} alt="" onError={imageLoadingFailedHandler} />
                 <div
                   onClick={() => { setFlag(false); setModelImg(src); }}
                   className="layer__ rounded text-white position-absolute maincolorbackground start-0 h-100 w-100 top-0 d-flex justify-content-center align-items-center"
@@ -42,7 +43,7 @@ function Gallery() {
         onClick={hideElement}
         className={flag ? 'd-none' : 'model__ position-fixed start-0 w-100 h-100 top-0 bg-black bg-opacity-25 d-flex justify-content-center align-items-center'}
       >
-        <img id="img" src={modelImg} alt="" style={{ width: '80%' }} />
+        <img id="img" src={modelImg} alt="" style={{ width: '80%' }} onError={imageLoadingFailedHandler} />
       </div>
     </section>
   );

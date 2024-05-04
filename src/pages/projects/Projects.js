@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./Projects.css";
 import { getAllProjects } from "../../services/projects";
+import { imageLoadingFailedHandler } from "../../helpers/image";
+import { PATHS } from "../../constants/paths";
+import { Link } from 'react-router-dom';
+
+
 
 const Projects = () => {
     const [allProjects, setAllProjects] = useState([]);
@@ -35,15 +40,16 @@ const Projects = () => {
                             <div className="member">
                                 {/* Image */}
                                 <div className="d-flex justify-content-center">
-                                    <img src={project.mainPic} className="img-fluid img-thumbnail" alt={project.title} style={{ height: '200px' }} />
+                                    <img src={project.mainPic} className="img-fluid img-thumbnail" alt={project.title} style={{ height: '200px' }} onError={imageLoadingFailedHandler} />
                                 </div>
                                 {/* Details */}
                                 <div>
                                     <h5 className="mt-3" style={{ textAlign: 'center' }}>{project.title}</h5>
-                                    <a href={`/project?id=${project._id}`} className="text-decoration-none d-flex justify-content-center align-items-center text-success mb-3">
-                                        <p className="mb-0">See More Details</p>
-                                        <i className="fa fa-arrow-right ms-2" style={{ marginTop: '5px' }}></i>
-                                    </a>
+                                    
+                                <Link to={PATHS.project(project._id)} className="text-decoration-none d-flex justify-content-center align-items-center text-success mb-3">
+                                    <p className="mb-0">See More Details</p>
+                                    <i className="fa fa-arrow-right ms-2" style={{ marginTop: '5px' }}></i>
+                                </Link>
                                 </div>
                             </div>
                         </div>
