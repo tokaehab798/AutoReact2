@@ -94,7 +94,7 @@ const MyComponent = () => {
               >
                 <div className="card-body d-flex justify-content-center align-items-center bg-body-tertiary">
                   <Link
-                    to={PATHS.adminAddProject}
+                    to={PATHS.adminaddsuccessstory}
                     style={{ textDecoration: "none" }}
                   >
                     <div className="circle-content position-relative">

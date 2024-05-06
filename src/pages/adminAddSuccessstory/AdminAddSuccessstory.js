@@ -6,7 +6,7 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { addSuccessStory } from "../../services/successstory";
 import { beforUploadTypeFileIsImage } from "../../helpers/image";
 import { PATHS } from "../../constants/paths";
-import "./AdminAddSuccessstory";
+import "./AdminAddSuccessstory.css";
 
 const AdminAddSuccessstory = () => {
   const navigate = useNavigate();
@@ -152,9 +152,6 @@ const AdminAddSuccessstory = () => {
           <h4 className="text-center mb-3">Team Members</h4>
           {/* Underline */}
           <div className="underline mb-lg-5 bg-success"></div>
-          <div className="circle-contentdown position-relative">
-            <i className="fa fa-plus fa-2x text-white position-relative"></i>
-          </div>
 
           <Row justify="center" align="middle">
             <Col lg={6} xs={24}>

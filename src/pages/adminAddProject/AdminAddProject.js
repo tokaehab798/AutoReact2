@@ -1,118 +1,214 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Button, Form, Upload, Input, message, Col, Flex, Row } from "antd";
+import { useNavigate } from "react-router-dom";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+
+import { addProject } from "../../services/project";
+import { beforUploadTypeFileIsImage } from "../../helpers/image";
+import { PATHS } from "../../constants/paths";
 import "./AdminAddProject.css";
 
-function AdminAddProject() {
-    const [formData, setFormData] = useState({
-        competitionName: '',
-        competitionDescription: ''
+const AdminAddProject = () => {
+  const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+
+  const imageFileUploadedHandler = async (options) => {
+    const { onSuccess, onError, file } = options;
+    setIsLoading(true);
+
+    try {
+      onSuccess(file, file);
+    } catch (err) {
+      onError(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const submitSuccess = () => {
+    message.open({
+      type: "success",
+      content: "This is a success message",
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
+    navigate(PATHS.projects);
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Add your form submission logic here
-        console.log("Form submitted with data:", formData);
-    };
+  const submitHandler = async (values) => {
+    setSubmitButtonDisabled(true);
 
-    return (
-        <section className="container">
-            <div className="go-back-container" style={{ marginLeft: "20px" }}>
-                <a className="go-back-link" onClick={() => window.history.back()}>
-                    <i className="fas fa-arrow-left"></i> Go Back
-                </a>
-            </div>
-            <form onSubmit={handleSubmit}>
-                <div className="p-5">
-                    <div className="container">
-                        <div className="row">
-                            {/* Competition Cards */}
-                            <div className="col-md-4 mb-3">
-                                <div className="card position-relative" style={{ width: "288px", height: "250px" }}>
-                                    <div className="card-body d-flex flex-column justify-content-center align-items-center bg-body-tertiary">
-                                        <div className="circle-content2 position-relative mb-3">
-                                            <i className="fa fa-plus fa-1x text-white position-relative"></i>
-                                        </div>
-                                        <div>Add New Photo</div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* Input Section */}
-                            <div className="col-md-7">
-                                {/* Name Input */}
-                                <div className="mb-2">
-                                    <label htmlFor="competitionName" className="form-label"></label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="competitionName"
-                                        name="competitionName"
-                                        value={formData.competitionName}
-                                        onChange={handleChange}
-                                        placeholder="Enter Project name"
-                                    />
-                                </div>
-                                {/* Description Input */}
-                                <div className="mb-2">
-                                    <label htmlFor="competitionDescription" className="form-label"></label>
-                                    <textarea
-                                        className="form-control"
-                                        id="competitionDescription"
-                                        name="competitionDescription"
-                                        value={formData.competitionDescription}
-                                        onChange={handleChange}
-                                        rows="5"
-                                        placeholder="Enter Project description"
-                                    ></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Additional card inputs */}
-                        <div className="m-3 row">
-                            {[1, 2, 3].map((index) => (
-                                <div className="col-md-4" key={index}>
-                                    <div className="card position-relative" style={{ width: "300px", height: "250px" }}>
-                                        <div className="card-body d-flex flex-column justify-content-center align-items-center bg-body-tertiary">
-                                            <div className="circle-content2 position-relative mb-3">
-                                                <i className="fa fa-plus fa-1x text-white position-relative"></i>
-                                            </div>
-                                            <div>Add New Photo</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <div>
-                            <div className="container p-5">
-                                {/* Team Members Title */}
-                                <h4 className="text-center mb-3">Team Members</h4>
-                                {/* Underline */}
-                                <div className="underline mb-lg-5 bg-success"></div>
-                                <div className="circle-contentdown position-relative">
-                                     <i className="fa fa-plus fa-2x text-white position-relative"></i>
-                                    </div>
-                                    <div className="mt-1 ms-2a">Add New Member</div>
-                            </div>
-                        </div>
-                        <div className="row justify-content-center align-items-center mt-5">
-                            <div className="col-md-6 d-flex justify-content-center">
-                                <button type="button" className="btn btn-lg btn-outline-success" onClick={() => window.history.back()}>Cancel</button>
-                            </div>
-                            <div className="col-md-6 d-flex justify-content-center">
-                                <button type="submit" className="btn btn-success btn-lg">Save</button>
-                            </div>
-                        </div>
+    try {
+      await addProject(values);
+
+      submitSuccess();
+    } catch (err) {
+      console.error(err);
+    }
+
+    setSubmitButtonDisabled(false);
+  };
+
+  return (
+    <section className="container">
+      <div className="go-back-container my-4" style={{ marginLeft: "20px" }}>
+        <a className="go-back-link" onClick={() => window.history.back()}>
+          <i className="fas fa-arrow-left"></i> Go Back
+        </a>
+      </div>
+
+      <Form
+        name="addProjectForm"
+        layout="vertical"
+        autoComplete="off"
+        onFinish={submitHandler}
+      >
+        <Row justify="center" align="middle">
+          <Col lg={6} xs={24}>
+            <Form.Item
+              label="Main Picture"
+              name="mainPic"
+              valuePropName="fileList"
+              getValueFromEvent={(e) => e.fileList}
+            >
+              <Upload
+                maxCount={1}
+                accept="image/*"
+                listType="picture-card"
+                beforeUpload={beforUploadTypeFileIsImage}
+                customRequest={imageFileUploadedHandler}
+              >
+                <Button
+                  style={{
+                    border: 0,
+                    background: "none",
+                  }}
+                  type="button"
+                >
+                  {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
+                  <div
+                    style={{
+                      marginTop: 8,
+                    }}
+                  >
+                    Upload
+                  </div>
+                </Button>
+              </Upload>
+            </Form.Item>
+          </Col>
+
+          <Col lg={12} xs={24}>
+            <Flex vertical>
+              <Form.Item label="Title" name="title">
+                <Input placeholder="Enter title name" />
+              </Form.Item>
+              <Form.Item label="Description" name="description">
+                <Input.TextArea placeholder="Enter description" />
+              </Form.Item>
+            </Flex>
+          </Col>
+        </Row>
+
+        <Row justify="center" align="middle">
+          <Col lg={6} xs={24}>
+            <Form.Item
+              label="Additional Pictures"
+              name="additionalPictures"
+              valuePropName="fileList"
+              getValueFromEvent={(e) => e.fileList}
+            >
+              <Upload
+                maxCount={1}
+                accept="image/*"
+                listType="picture-card"
+                beforeUpload={beforUploadTypeFileIsImage}
+                customRequest={imageFileUploadedHandler}
+              >
+                <Button
+                  style={{
+                    border: 0,
+                    background: "none",
+                  }}
+                  type="button"
+                >
+                  {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
+                  <div
+                    style={{
+                      marginTop: 8,
+                    }}
+                  >
+                    Upload
+                  </div>
+                </Button>
+              </Upload>
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <div className="container p-5">
+          {/* Team Members Title */}
+          <h4 className="text-center mb-3">Team Members</h4>
+          {/* Underline */}
+          <div className="underline mb-lg-5 bg-success"></div>
+
+          <Row justify="center" align="middle">
+            <Col lg={6} xs={24}>
+              <Form.Item
+                label="Team Member Picture"
+                name="teamMembers"
+                valuePropName="fileList"
+                getValueFromEvent={(e) => e.fileList}
+              >
+                <Upload
+                  maxCount={1}
+                  accept="image/*"
+                  listType="picture-card"
+                  beforeUpload={beforUploadTypeFileIsImage}
+                  customRequest={imageFileUploadedHandler}
+                >
+                  <Button
+                    style={{
+                      border: 0,
+                      background: "none",
+                    }}
+                    type="button"
+                  >
+                    {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
+                    <div
+                      style={{
+                        marginTop: 8,
+                      }}
+                    >
+                      Upload
                     </div>
-                </div>
-            </form>
-        </section>
-    );
-}
+                  </Button>
+                </Upload>
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} xs={24}>
+              <Form.Item label="Team Member Name" name="teamMembers[0][name]">
+                <Input placeholder="Enter name" />
+              </Form.Item>
+            </Col>
+          </Row>
+        </div>
+
+        <Form.Item>
+          <Button
+            type="success"
+            size="large"
+            htmlType="submit"
+            loading={submitButtonDisabled}
+          >
+            Save
+          </Button>
+        </Form.Item>
+      </Form>
+    </section>
+  );
+};
 
 export default AdminAddProject;
