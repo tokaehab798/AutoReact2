@@ -46,7 +46,7 @@ const AdminAddStudyplan = lazy(() =>
   import("../pages/adminAddStudyplan/AdminAddStudyplan")
 );
 const AdminAddSuccessstory = lazy(() =>
-  import("../pages/adminAddSuccessstory/AdminAddSuccessstoryV2")
+  import("../pages/adminAddSuccessstory/AdminAddSuccessstory")
 );
 const AdminAddProject = lazy(() =>
   import("../pages/adminAddProject/AdminAddProject")

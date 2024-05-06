@@ -3,7 +3,7 @@ import "./Successstories.css"; // Make sure to import your CSS file if needed
 import { getAllSuccessStories } from "../../services/successstories";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../constants/paths";
-import { imageLoadingFailedHandler } from "../../helpers/image";
+import { errorImage, imageLoadingFailedHandler } from "../../helpers/image";
 import { AuthContext } from "../../context/AuthContext";
 import { ADMIN } from "../../constants/roles";
 import { deleteSuccessStoryById } from "../../services/successstory";
@@ -32,6 +32,8 @@ const MyComponent = () => {
   const handleDeleteSuccessStory = async (id) => {
     try {
       await deleteSuccessStoryById(id);
+
+      fetchAllSuccessStories();
     } catch (err) {
       console.error(err);
     }
@@ -41,17 +43,17 @@ const MyComponent = () => {
     <section className="p-5">
       <div className="container">
         <div className="row">
-          <div className="col-md-4 mb-3">
-            {allSuccessStories.map((story) => (
+          {allSuccessStories.map((story) => (
+            <div className="col-md-4 mb-3" key={story._id}>
               <div
-                key={story._id}
                 className="card"
                 style={{ width: "18rem", marginBottom: "20px" }}
               >
                 <img
-                  src={story.mainPicture.secure_url}
+                  src={story?.mainPicture?.secure_url || errorImage}
                   className="card-img-top"
                   alt="Story Main Picture"
+                  height={200}
                   onError={imageLoadingFailedHandler}
                 />
                 <div className="card-body">
@@ -81,8 +83,8 @@ const MyComponent = () => {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
 
           <div className="col-md-4 mb-3">
             <div
