@@ -3,7 +3,7 @@ import "./Successstories.css"; // Make sure to import your CSS file if needed
 import { getAllSuccessStories } from "../../services/successstories";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../constants/paths";
-import { imageLoadingFailedHandler } from "../../helpers/image";
+import { errorImage, imageLoadingFailedHandler } from "../../helpers/image";
 import { AuthContext } from "../../context/AuthContext";
 import { ADMIN } from "../../constants/roles";
 import { deleteSuccessStoryById } from "../../services/successstory";
@@ -32,6 +32,7 @@ const MyComponent = () => {
   const handleDeleteSuccessStory = async (id) => {
     try {
       await deleteSuccessStoryById(id);
+
       fetchAllSuccessStories();
     } catch (err) {
       console.error(err);
@@ -43,15 +44,16 @@ const MyComponent = () => {
       <div className="container">
         <div className="row">
           {allSuccessStories.map((story) => (
-            <div
-              key={story._id}
-              className="col-md-4 mb-3"
-            >
-              <div className="card" style={{ width: "18rem" }}>
+            <div className="col-md-4 mb-3" key={story._id}>
+              <div
+                className="card"
+                style={{ width: "18rem", marginBottom: "20px" }}
+              >
                 <img
-                  src={story.mainPicture.secure_url}
+                  src={story?.mainPicture?.secure_url || errorImage}
                   className="card-img-top"
                   alt="Story Main Picture"
+                  height={200}
                   onError={imageLoadingFailedHandler}
                 />
                 <div className="card-body">
@@ -84,7 +86,7 @@ const MyComponent = () => {
             </div>
           ))}
 
-{role === ADMIN && (
+          {role === ADMIN && (
             <div className="col-md-4 mb-3">
               <div
                 className="card position-relative"
@@ -92,7 +94,7 @@ const MyComponent = () => {
               >
                 <div className="card-body d-flex justify-content-center align-items-center bg-body-tertiary">
                   <Link
-                    to={PATHS.adminAddProject}
+                    to={PATHS.adminaddsuccessstory}
                     style={{ textDecoration: "none" }}
                   >
                     <div className="circle-content position-relative">
