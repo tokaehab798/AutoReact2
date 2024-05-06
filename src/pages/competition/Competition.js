@@ -4,10 +4,9 @@ import { useParams } from "react-router-dom";
 import { getCompetitionById } from "../../services/competition";
 import { imageLoadingFailedHandler } from "../../helpers/image";
 
-
 const MyComponent = () => {
-  const { compeId:id } = useParams();
-  const [competition, setCompetition] = useState([]);
+  const { compeId: id } = useParams();
+  const [competition, setCompetition] = useState(null);
 
   useEffect(() => {
     const fetchCompetition = async () => {
@@ -36,14 +35,14 @@ const MyComponent = () => {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-5">
-            <img src={competition.competitionPic} className="img-fluid rounded-1" alt="Competition Image" style={{ width: '450px' }}  onError={imageLoadingFailedHandler} />
+            <img src={competition.competitionPic.secure_url} className="img-fluid rounded-1" alt="Competition Image" style={{ width: '450px' }} onError={imageLoadingFailedHandler} />
           </div>
           <div className="col-md-7 d-flex align-items-center">
             <div>
               <h2>{competition.title}</h2>
               <p>{competition.description}</p>
-              <div className=" d-flex justify-content-start">
-                <p className="mb-0 d-inline "><strong>Go To Link:</strong> <a href={competition.link} className="text-success">{competition.link}</a></p>
+              <div className="d-flex justify-content-start">
+                <p className="mb-0 d-inline"><strong>Go To Link:</strong> <a href={competition.link} className="text-success">{competition.link}</a></p>
               </div>
             </div>
           </div>

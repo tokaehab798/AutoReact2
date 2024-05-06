@@ -39,7 +39,7 @@ function InternalTraining2() {
             {/* Image Section */}
             <div className="col-md-5">
               <img
-                src={internalTraining.trainingPicture}
+                src={internalTraining.trainingPicture.secure_url}
                 className="img-fluid rounded-1"
                 alt="Internal Training Image"
                 style={{ width: '450px' }}
@@ -100,7 +100,7 @@ function InternalTraining2() {
                 {/* Image without circular shape */}
                 <div className="overflow-hidden me-3" style={{ width: '200px', height: '200px' }}>
                   <img
-                    src={instructor.profilePicture}
+                    src={instructor.profilePicture.secure_url}
                     alt="Instructor"
                     className="w-100 h-100"
                     style={{ height: '100%' }}
@@ -111,7 +111,7 @@ function InternalTraining2() {
                 <div>
                   <h5 className="fw-bold">{instructor.name}</h5>
                   <h6 className="text-muted">{instructor.title}</h6>
-                  <p>{instructor.description}</p>
+                 
                 </div>
               </div>
             ))}

@@ -138,7 +138,7 @@ export const ADDITIONAL_ROUTES = [
   },
   {
     path: PATHS.adminaddcompetition,
-    roles: ALL_ROLES,
+    roles: [ADMIN],
     page: pages.AdminAddCompetition,
   },
   {

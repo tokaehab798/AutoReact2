@@ -7,3 +7,11 @@ export const getProjectById = (id) => {
     method: method.GET,
   });
 };
+
+
+export const deleteProjectById = (id) => {
+  return axiosInstance({
+    url: `/api/v2/projects/${id}`,
+    method: method.DELETE,
+  });
+};

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./DepartmentMembers.css";
 import { getAllStaff } from "../../services/staff";
 import { imageLoadingFailedHandler } from "../../helpers/image";
+import { PATHS } from "../../constants/paths";
 
 function DepartmentMembers() {
   const handleGoBack = () => {
@@ -43,7 +44,7 @@ function DepartmentMembers() {
                 <div key={member._id} className="col-md-3 text-center mb-4">
                   <div className="circle-img">
                     <img
-                      src={member.profilePicture || "placeholder.jpg"}
+                      src={member.profilePicture.secure_url}
                       alt="Profile Picture"
                       className="rounded-circle img-fluid"
                       style={{ width: "250px" }}
@@ -51,8 +52,8 @@ function DepartmentMembers() {
                     />
                   </div>
                   <h5 className="mt-2">{member.user.name}</h5>
-                  <Link
-                    to={`/departmentMember?id=${member._id}`}
+                  <Link 
+                    to={PATHS.departmentmember((member.user._id))}
                     className="text-success text-decoration-none"
                   >
                     View Profile

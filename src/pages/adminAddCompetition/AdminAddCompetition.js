@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./AdminAddCompetition.css"
 
 function AdminAddCompetition() {
+    const [competitionData, setCompetitionData] = useState({
+        name: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        link: ''
+    });
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setCompetitionData({
+            ...competitionData,
+            [id]: value
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add form submission logic here
+        // You can now access the form data in the competitionData state object
+        console.log(competitionData);
+        // Add your form submission logic here, like making an API call
     };
 
     return (
@@ -34,33 +52,33 @@ function AdminAddCompetition() {
                             <div className="col-md-7">
                                 {/* Name Input */}
                                 <div className="mb-2">
-                                    <label htmlFor="competitionName" className="form-label"></label>
-                                    <input type="text" className="form-control" id="competitionName" placeholder="Enter competition name" />
+                                    <label htmlFor="competitionName" className="form-label">Competition Name:</label>
+                                    <input type="text" className="form-control" id="name" placeholder="Enter competition name" value={competitionData.name} onChange={handleChange} />
                                 </div>
                                 {/* Description Input */}
                                 <div className="mb-2">
-                                    <label htmlFor="competitionDescription" className="form-label"></label>
-                                    <textarea className="form-control" id="competitionDescription" rows="5" placeholder="Enter competition description"></textarea>
+                                    <label htmlFor="competitionDescription" className="form-label">Competition Description:</label>
+                                    <textarea className="form-control" id="description" rows="5" placeholder="Enter competition description" value={competitionData.description} onChange={handleChange}></textarea>
                                 </div>
                                 {/* Starting and Ending Date Inputs */}
                                 <div className="row">
                                     <div className="col-md-6 d-flex align-items-center">
                                         <label htmlFor="startDate" className="form-label mr-2">Starting Date:</label>
                                         <div className="mb-2">
-                                            <input type="date" id="startDate" className="form-control date-input" />
+                                            <input type="date" id="startDate" className="form-control date-input" value={competitionData.startDate} onChange={handleChange} />
                                         </div>
                                     </div>
                                     <div className="col-md-6 d-flex align-items-center">
                                         <label htmlFor="endDate" className="form-label mr-2">Ending Date:</label>
                                         <div className="mb-2">
-                                            <input type="date" id="endDate" className="form-control date-input" />
+                                            <input type="date" id="endDate" className="form-control date-input" value={competitionData.endDate} onChange={handleChange} />
                                         </div>
                                     </div>
                                 </div>
                                 {/* Competition Link Input */}
                                 <div className="mb-2">
-                                    <label htmlFor="competitionLink" className="form-label"></label>
-                                    <input type="text" className="form-control" id="competitionLink" placeholder="Enter competition Link" />
+                                    <label htmlFor="competitionLink" className="form-label">Competition Link:</label>
+                                    <input type="text" className="form-control" id="link" placeholder="Enter competition Link" value={competitionData.link} onChange={handleChange} />
                                 </div>
                                 {/* Buttons */}
                                 <div className="row justify-content-center align-items-center mt-5">
@@ -71,7 +89,7 @@ function AdminAddCompetition() {
                                         <button type="submit" className="btn btn-success btn-lg">Save</button>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
