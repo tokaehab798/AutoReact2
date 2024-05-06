@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Assuming you are using react-router-dom
+import { useParams } from 'react-router-dom';
 import { getExternalTrainingById } from '../../services/externaltraining';
 import "./ExternalTraining.css";
 import { imageLoadingFailedHandler } from '../../helpers/image';
@@ -10,12 +10,12 @@ const handleGoBack = () => {
 
 function ExternalTraining() {
   const { ExtId:id } = useParams();
-  const [externalTraining, setExternalTraining] = useState([]);
+  const [externalTraining, setExternalTraining] = useState(null); // Change initial state to null
 
   useEffect(() => {
     const fetchExternalTraining = async () => {
       try {
-        const response = await getExternalTrainingById(id); // Pass the id to fetch training details
+        const response = await getExternalTrainingById(id);
         setExternalTraining(response.data);
       } catch (error) {
         console.error('Error fetching training details:', error);
@@ -43,7 +43,8 @@ function ExternalTraining() {
         <div className="row justify-content-center">
           {/* Image Section */}
           <div className="col-md-5">
-            <img src={externalTraining.trainingPic} className="img-fluid rounded-1" alt="Training Image" style={{ width: '450px' }} onError={imageLoadingFailedHandler} />
+            {/* Access the secure_url property of the trainingPic object */}
+            <img src={externalTraining.trainingPic.secure_url} className="img-fluid rounded-1" alt="Training Image" style={{ width: '450px' }} onError={imageLoadingFailedHandler} />
           </div>
           {/* Content Section */}
           <div className="col-md-7 d-flex align-items-center">
@@ -56,7 +57,7 @@ function ExternalTraining() {
               <div>
                 <p className="mb-0"><strong>Start from:</strong> <span className="text-secondary">{new Date(externalTraining.startsFrom).toLocaleDateString()}</span></p>
                 <div className="d-inline">
-                  <p className="mb-0 d-inline me-5"><strong>Period:</strong> <span className="text-secondary">{externalTraining.endsAt} weeks</span></p>
+                  <p className="mb-0 d-inline me-5"><strong>Period:</strong> <span className="text-secondary">{new Date(externalTraining.endsAt).toLocaleDateString()}</span></p>
                   <p className="mb-0 d-inline ms-5"><strong>Link:</strong> <a href={externalTraining.link} className="text-success">{externalTraining.link}</a></p>
                 </div>
               </div>

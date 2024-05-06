@@ -7,3 +7,10 @@ export const getCompetitionById = (id) => {
     method: method.GET,
   });
 };
+
+export const deleteCompetitionById = (id) => {
+  return axiosInstance({
+    url: `/api/v2/competitions/${id}`,
+    method: method.DELETE,
+  });
+};

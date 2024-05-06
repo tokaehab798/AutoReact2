@@ -7,3 +7,10 @@ export const getInternalTrainingById = (id) => {
     method: method.GET,
   });
 };
+
+export const deleteInternalById = (id) => {
+  return axiosInstance({
+    url: `/api/v2/internalTrainings/${id}`,
+    method: method.DELETE,
+  });
+};

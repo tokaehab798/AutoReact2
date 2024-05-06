@@ -7,3 +7,10 @@ export const getExternalTrainingById = (id) => {
     method: method.GET,
   });
 };
+
+export const deleteExternalById = (id) => {
+  return axiosInstance({
+    url: `/api/v2/externalTrainings/${id}`,
+    method: method.DELETE,
+  });
+};

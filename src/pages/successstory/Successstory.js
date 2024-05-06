@@ -41,7 +41,7 @@ const SuccessStory = () => {
             {/* Image Section */}
             <div className="col-md-4">
               <img
-                src={successStory.mainPicture}
+                src={successStory.mainPicture.secure_url}
                 className="img-fluid"
                 alt="Success Story Image"
                 style={{ width: "450px" }}
@@ -64,13 +64,13 @@ const SuccessStory = () => {
       {/* Picture Section */}
       <div className="p-3">
         <div className="row justify-content-center mb-5 container align-items-center">
-          {successStory.additionalPictures.map((src, index) => (
+          {successStory.additionalPictures.map((picture, index) => (
             <div className="col-md-4" key={index}>
               <div className="member">
                 {/* Image */}
                 <div className="d-flex justify-content-center">
                   <img
-                    src={src}
+                    src={picture.secure_url}
                     className="img-fluid"
                     alt="Project Image"
                     style={{ width: "350px" }}
@@ -121,18 +121,17 @@ const SuccessStory = () => {
           <div className="d-flex justify-content-center flex-wrap">
             {successStory.teamMembers.map((member, index) => (
               <div className="text-center mx-5 mb-3" key={index}>
-                {/* Team Member Image */}
-                <img
-                  src={member.picture}
-                  className="rounded-circle"
-                  alt={"Person " + (index + 1)}
-                  style={{ width: "170px", height: "170px" }}
-                  onError={imageLoadingFailedHandler}
-                />
-                {/* Team Member Name */}
+                {member.picture && ( // Check if 'picture' exists before accessing its properties
+                  <img
+                    src={member.picture.secure_url} // Access 'picture' directly, no need for 'teamMembers'
+                    className="rounded-circle"
+                    alt={"Person " + (index + 1)}
+                    style={{ width: "170px", height: "170px" }}
+                    onError={imageLoadingFailedHandler}
+                  />
+                )}
                 <div className="mt-2">
                   <h4>{member.name}</h4>
-                  {/* Team Member Role */}
                   <p>Student</p>
                 </div>
               </div>

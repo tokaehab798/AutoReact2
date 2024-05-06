@@ -42,7 +42,7 @@ const Project = () => {
                     <div className="row justify-content-center">
                         {/* Image Section */}
                         <div className="col-md-4">
-                            <img src={projectData.mainPic} className="img-fluid" alt="Project Image" style={{ width: '450px' }} onError={imageLoadingFailedHandler}/>
+                            <img src={projectData.mainPic.secure_url} className="img-fluid" alt="Project Image" style={{ width: '450px' }} onError={imageLoadingFailedHandler}/>
                         </div>
                         {/* Content Section */}
                         <div className="col-md-8 d-flex align-items-start">
@@ -61,12 +61,12 @@ const Project = () => {
             <div className="p-3">
                 <div className="container">
                     <div className="row justify-content-center mb-5 container align-items-center">
-                        {projectData.additionalPictures.map((src, index) => (
+                        {projectData.additionalPictures.map((picture, index) => (
                             <div className="col-md-4" key={index}>
                                 <div className="member">
                                     {/* Image */}
                                     <div className="d-flex justify-content-center">
-                                        <img src={src} className="img-fluid" alt="Project Image" style={{ width: '300px' }} onError={imageLoadingFailedHandler}/>
+                                        <img src={picture.secure_url} className="img-fluid" alt="Project Image" style={{ width: '300px' }} onError={imageLoadingFailedHandler}/>
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@ const Project = () => {
             <div className="pb-5">
                 <div className="container p-5">
                     {/* Team Members Title */}
-                    <h2 className="mb-3">Project Team Members</h2>
+                    <h2 className="mb-3 text-center">Project Team Members</h2>
                     {/* Underline */}
                     <div className="underline mb-lg-5 bg-success"></div>
 
@@ -88,7 +88,7 @@ const Project = () => {
                         {projectData.teamMembers.map((member, index) => (
                             <div className="text-center mx-5 mb-3" key={index}>
                                 {/* Team Member Image */}
-                                <img src={member.pic} alt={"Person " + (index + 1)} className="rounded-circle" style={{ width: '170px', height: '170px' }} onError={imageLoadingFailedHandler} />
+                                <img src={member.pic.secure_url} alt={"Person " + (index + 1)} className="rounded-circle" style={{ width: '170px', height: '170px' }} onError={imageLoadingFailedHandler} />
                                 {/* Team Member Name */}
                                 <div className="mt-2">
                                     <h4>{member.name}</h4>

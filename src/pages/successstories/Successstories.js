@@ -86,23 +86,25 @@ const MyComponent = () => {
             </div>
           ))}
 
-          <div className="col-md-4 mb-3">
-            <div
-              className="card position-relative"
-              style={{ width: "288px", height: "435.45px" }}
-            >
-              <div className="card-body d-flex justify-content-center align-items-center bg-body-tertiary">
-                <Link
-                  to={PATHS.adminaddsuccessstory}
-                  style={{ textDecoration: "none" }}
-                >
-                  <div className="circle-content position-relative">
-                    <i className="fa fa-plus fa-3x text-white position-relative"></i>
-                  </div>
-                </Link>
+          {role === ADMIN && (
+            <div className="col-md-4 mb-3">
+              <div
+                className="card position-relative"
+                style={{ width: "288px", height: "400px" }}
+              >
+                <div className="card-body d-flex justify-content-center align-items-center bg-body-tertiary">
+                  <Link
+                    to={PATHS.adminAddProject}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="circle-content position-relative">
+                      <i className="fa fa-plus fa-3x text-white position-relative"></i>
+                    </div>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

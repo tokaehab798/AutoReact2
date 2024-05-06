@@ -4,6 +4,7 @@ import "./Home.css";
 import { imageLoadingFailedHandler } from "../../helpers/image";
 import { getAllStaff } from "../../services/staff";
 import { PATHS } from "../../constants/paths";
+import { getAllProjects } from "../../services/projects";
 
 // Sample data arrays (replace with real data from API or other sources)
 
@@ -26,6 +27,21 @@ function HomePage() {
   useEffect(() => {
     fetchAllStaff();
   }, [fetchAllStaff]);
+  const [allProjects, setAllProjects] = useState([]);
+
+  const fetchAllProjects = useCallback(async () => {
+      try {
+          const response = await getAllProjects();
+          const { data } = response;
+          setAllProjects(data);
+      } catch (err) {
+          console.error(err);
+      }
+  }, []);
+
+  useEffect(() => {
+      fetchAllProjects();
+  }, [fetchAllProjects]);
 
   return (
     <section className="text-center position-relative">
@@ -62,7 +78,7 @@ function HomePage() {
             us in shaping the future of technology through AI.
           </p>
           <Link
-            to="/adminlayout/adminabout"
+            to={PATHS.about}
             className="btn btn-success text-white text-decoration-none"
           >
             About Us
@@ -160,7 +176,7 @@ function HomePage() {
                 <div key={member.user.id} className="col-3 mb-4 m-md-4">
                   <div className="member-card card fixed-height-card-member">
                     <img
-                      src={member.profilePicture}
+                      src={member.profilePicture.secure_url}
                       className="img-fluid card-img-top lazyload img-thumbnail"
                       alt="Member Image"
                       style={{ height: "200px" }}
@@ -187,7 +203,7 @@ function HomePage() {
           </div>
           <div className="text-center mt-4">
             <Link
-              to="/studentlayout/departmentmembers"
+              to={PATHS.departmentMembers}
               className="btn btn-outline-success"
             >
               See All
@@ -201,38 +217,40 @@ function HomePage() {
         <h2 className="text-center mb-3">Projects</h2>
         <div className="underline mb-lg-5 bg-success"></div>
         <div className="row justify-content-center">
-          {srcsofprojects.map((src, i) => (
-            <div key={i} className="col-md-3 mb-4 m-md-4">
-              <div className="project-card card fixed-height-card">
-                <img
-                  src={
-                    "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                  }
-                  className="img-fluid card-img-top lazyload img-thumbnail"
-                  alt="Project Image"
-                  style={{ height: "200px" }}
-                  onError={imageLoadingFailedHandler}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{projectsNames[i]}</h5>
-                  <Link
-                    to="/adminlayout/adminproject"
-                    className="btn btn-success d-block"
-                  >
-                    See Course Guide{" "}
-                    <i
-                      className="fa fa-arrow-right  ms-2"
-                      style={{ marginTop: "5px" }}
-                    ></i>
-                  </Link>
+        {allProjects
+              .filter((_, index) => index < 3)
+              .map((project) => (
+                <div key={project._id} className="col-3 mb-4 m-md-4">
+                  <div className="member-card card fixed-height-card-member">
+                    <img
+                      src={project.mainPic.secure_url}
+                      className="img-fluid card-img-top lazyload img-thumbnail"
+                      alt="Member Image"
+                      style={{ height: "200px" }}
+                      onError={imageLoadingFailedHandler}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title text-center">
+                        {project.title}
+                      </h5>
+                      <Link
+                        to={PATHS.project(project._id)}
+                        className="btn btn-success d-block mx-auto"
+                      >
+                        See Details{" "}
+                        <i
+                          className="fa fa-arrow-right ms-2"
+                          style={{ marginTop: "5px" }}
+                        ></i>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              ))}
         </div>
         <div className="text-center mt-4">
           <Link
-            to="/adminlayout/adminprojects"
+            to={PATHS.projects}
             className="btn btn-outline-success"
           >
             See All
