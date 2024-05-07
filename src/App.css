@@ -92,3 +92,18 @@ body {
 .ant-btn-success:hover {
     opacity: 0.7;
 }
+
+
+.ant-upload{
+width:250px !important;
+height:250px !important;
+}
+.ant-upload-list-item-container{
+    width:250px !important;
+height:250px !important;
+}
+.card-text{
+    overflow:hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap;
+}

@@ -102,6 +102,11 @@ export const ADDITIONAL_ROUTES = [
     page: pages.InternalTraining,
   },
   {
+    path: PATHS.staffEditProfile,
+    roles: ALL_ROLES,
+    page: pages.staffEditProfile,
+  },
+  {
     path: PATHS.internaltraining2(),
     roles: ALL_ROLES,
     page: pages.InternalTraining2,

@@ -71,7 +71,7 @@ function ExternalTraining2() {
                         <div className="col-md-4 mb-3">
                             <div className="card position-relative" style={{ width: "320px", height: "451px" }}>
                                 <div className="card-body d-flex justify-content-center align-items-center bg-body-tertiary">
-                                    <Link to={PATHS.adminaddcompetition} style={{ textDecoration: "none" }}> 
+                                    <Link to={PATHS.adminaddexternal} style={{ textDecoration: "none" }}> 
                                         <div className="circle-content3 position-relative">
                                             <i className="fa fa-plus fa-3x text-white position-relative"></i>
                                         </div>

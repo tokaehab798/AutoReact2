@@ -30,6 +30,7 @@ export const PATHS = {
   adminaddsuccessstory: "/adminaddsuccessstory",
   adminaddstudyplan: "/adminaddstudyplan",
   adminaddcompetition: "/adminaddcompetition",
+  staffEditProfile: "/staffEditProfile",
   adminAddProject: "/adminAddProject",
   notfound: "/notfound",
 };

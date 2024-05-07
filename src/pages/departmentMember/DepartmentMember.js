@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getStaffById } from "../../services/staff2";
 import { imageLoadingFailedHandler } from "../../helpers/image";
 import "./DepartmentMember.css";
+import { PATHS } from "../../constants/paths";
 
 function DepartmentMemberProfile() {
   const [activeTab, setActiveTab] = useState("subjects");
@@ -30,6 +31,7 @@ function DepartmentMemberProfile() {
     if (!member) {
       return <div>Loading...</div>;
     }
+
 
     switch (activeTab) {
       case "subjects":
@@ -84,9 +86,22 @@ function DepartmentMemberProfile() {
         return null;
     }
   };
-
+  const editButtonStyle = {
+    backgroundColor: "#157347",
+    borderColor: "#157347",
+  };
   return (
     <section className="bg-light">
+           <div className=" d-flex justify-content-between container" style={{ paddingLeft: '20px',paddingTop: '20px' }}>
+        <a href="#" className="go-back-link" onClick={() => window.history.back()}>
+          <i className="fas fa-arrow-left"></i> Go Back
+        </a>
+        <button type="button" className="btn btn-primary" style={editButtonStyle}>
+        <Link to={PATHS.staffEditProfile} style={{ textDecoration: 'none', color: 'white' }}>
+        Edit
+        </Link>
+        </button>
+      </div>
       {member && (
         <div className="container">
           <div className="row justify-content-center align-items-center">
