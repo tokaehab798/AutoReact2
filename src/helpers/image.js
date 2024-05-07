@@ -20,3 +20,15 @@ export const beforUploadTypeFileIsImage = (file) => {
 
   return isImage(file) || Upload.LIST_IGNORE;
 };
+
+export const isPDF = (file) => {
+  return file.type === "application/pdf";
+};
+
+export const beforUploadTypeFileIsPdf = (file) => {
+  if (!isPDF(file)) {
+    message.error(`${file.name} is not an PDF file`);
+  }
+
+  return isPDF(file) || Upload.LIST_IGNORE;
+};

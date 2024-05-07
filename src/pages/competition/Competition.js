@@ -24,7 +24,7 @@ const MyComponent = () => {
   if (!competition) {
     return <div>Loading...</div>;
   }
-
+  const truncatedDescription = competition.description.substring(0, 50) + "...";
   return (
     <div className="p-5">
       <div className="go-back-container" style={{ marginLeft: "20px" }}>

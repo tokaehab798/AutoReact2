@@ -46,8 +46,12 @@ const TrainingComponent = () => {
                   <img src={competition.competitionPic.secure_url} className="card-img-top" alt="Competition" style={{ objectFit: 'cover', height: '100%' }} onError={imageLoadingFailedHandler} />
                 </div>
                 <div className="card-body ">
-                  <div className="d-flex justify-content-between ">
-                    <h4 className="card-title">{competition.title}</h4>
+                  <h4 className="card-title">{competition.title}</h4>
+                  <p className="card-text text-muted">{competition.description}</p>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <button className="btn btn-success">
+                      <Link to={PATHS.competition(competition._id)} style={{ textDecoration: 'none', color: 'inherit' }}>Register now</Link>
+                    </button>
                     {role === ADMIN && (
                       <button
                         className="btn btn-danger btn-sm"
@@ -56,13 +60,6 @@ const TrainingComponent = () => {
                         <i className="fa fa-trash"></i>
                       </button>
                     )}
-                  </div>
-                  <p className="card-text text-muted">{competition.description}</p>
-                  <div className="d-flex justify-content-between">
-                    <p className="fw-bold">From 12dec to 2jan</p>
-                    <button className="btn btn-success">
-                      <Link to={PATHS.competition(competition._id)} style={{ textDecoration: 'none', color: 'inherit' }}>Register now</Link>
-                    </button>
                   </div>
                 </div>
               </div>

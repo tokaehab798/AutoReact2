@@ -46,8 +46,8 @@ const MyComponent = () => {
           {allSuccessStories.map((story) => (
             <div className="col-md-4 mb-3" key={story._id}>
               <div
-                className="card"
-                style={{ width: "18rem", marginBottom: "20px" }}
+                className="card "
+                style={{ width: "18rem", marginBottom: "20px" , height:"400px"}}
               >
                 <img
                   src={story?.mainPicture?.secure_url || errorImage}
@@ -58,7 +58,7 @@ const MyComponent = () => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{story.title}</h5>
-                  <p className="card-text">{story.description}</p>
+                  <p className="card-text ">{story.description}</p>
 
                   <div className="d-flex justify-content-between">
                     <Link

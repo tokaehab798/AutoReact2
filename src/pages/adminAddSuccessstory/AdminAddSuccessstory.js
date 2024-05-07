@@ -198,7 +198,7 @@ const AdminAddSuccessstory = () => {
 
         <Form.Item>
           <Button
-            type="primary"
+            type="success"
             size="large"
             htmlType="submit"
             loading={submitButtonDisabled}

@@ -16,6 +16,7 @@ const Competitions = lazy(() => import("../pages/competitions/Competitions"));
 const Competition = lazy(() => import("../pages/competition/Competition"));
 const Projects = lazy(() => import("../pages/projects/Projects"));
 const Project = lazy(() => import("../pages/project/Project"));
+const staffEditProfile = lazy(() => import("../pages/staffEditProfile/staffEditProfile"));
 const Form = lazy(() => import("../pages/form/Form"));
 const AdminForm = lazy(() => import("../pages/adminform/AdminForm"));
 const DoctorForm = lazy(() => import("../pages/doctorform/DoctorForm"));
@@ -83,5 +84,6 @@ export {
   AdminAddExternal,
   AdminAddProject,
   AdminAddInternal,
+  staffEditProfile,
   NotFound,
 };
