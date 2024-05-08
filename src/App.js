@@ -14,7 +14,7 @@ import LoginForm from "./pages/login/Login";
 
 const App = () => {
   const {
-    user: { isAuthenticated },
+    user: { isAuthenticated, role },
     dispatch,
   } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -54,9 +54,8 @@ const App = () => {
       <Suspense fallback={<span>... loading</span>}>
         <Routes>
           {isAuthenticated ? (
-            ROUTES
-              // .filter((route) => route.roles?.includes(user.role))
-              .map((route, index) => (
+            ROUTES.filter((route) => route.roles?.includes(role)).map(
+              (route, index) => (
                 <Route
                   key={index}
                   path={route.path}
@@ -67,7 +66,8 @@ const App = () => {
                     />
                   }
                 />
-              ))
+              )
+            )
           ) : (
             <Route path={PATHS.login} element={<LoginForm />} />
           )}

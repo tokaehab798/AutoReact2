@@ -1,89 +1,102 @@
-import React, { useState } from 'react';
-import './Form.css'; 
-import { Link } from 'react-router-dom';
-import { createForm } from '../../services/Form';
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createForm } from "../../services/Form";
+import { Button, Input, message, Form, Select } from "antd";
+import { PATHS } from "../../constants/paths";
+import "./Form.css";
+import { AuthContext } from "../../context/AuthContext";
 
-const FormComponent = ({ userId }) => { // Accept userId as a prop
-    const [hidelabel, setHideLabel] = useState(true);
-    const [description, setDescription] = useState('');
-    const [selectedForm, setSelectedForm] = useState('');
+const FormComponent = () => {
+  const {
+    user: { id },
+  } = useContext(AuthContext);
 
-    const handleDescriptionChange = (event) => {
-        setDescription(event.target.value);
-        setHideLabel(!event.target.value);
+  const navigate = useNavigate();
+
+  const submitSuccess = () => {
+    message.open({
+      type: "success",
+      content: "This is a success message",
+    });
+
+    navigate(PATHS.home);
+  };
+
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+
+  const submitHandler = async (values) => {
+    setSubmitButtonDisabled(true);
+
+    const data = {
+      ...values,
+      userId: id,
     };
 
-    const handleFormSelection = (formType) => {
-        setSelectedForm(formType);
-    };
+    try {
+      await createForm(data);
 
-    const handleSubmit = () => {
-        if (selectedForm) {
-            createForm(userId, { subject: selectedForm, description: description })
-                .then(response => {
-                    console.log('Form submitted successfully:', response);
-                    // Optionally, you can reset the form state here
-                    setSelectedForm('');
-                    setDescription('');
-                    setHideLabel(true);
-                }).catch(error => {
-                    console.error('Error submitting form:', error);
-                });
-        } else {
-            console.error('No form type selected.');
-        }
-    };
+      submitSuccess();
+    } catch (err) {
+      console.error(err);
+    }
 
-    return (
-        <section className="p-5">
-            <div className="container">
-                <div className="row justify-content-center">
-                    <div className="p-4 bg-light rounded" style={{ maxWidth: '700px' }}>
-                        <form>
-                            <div className="row mb-3 align-items-center">
-                                <div className="col-auto">
-                                    <p className="fw-bold me-2">Form Type:</p>
-                                </div>
-                                <div className="col dropdown-center">
-                                    <div className="dropdown">
-                                        <button className="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                            {selectedForm ? selectedForm : 'Select Form'}
-                                        </button>
-                                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li><button className="dropdown-item" onClick={() => handleFormSelection('Subject Hours')}>Subject Hours</button></li>
-                                            <li><button className="dropdown-item" onClick={() => handleFormSelection('OverLoad Hours')}>OverLoad Hours</button></li>
-                                            <li><button className="dropdown-item" onClick={() => handleFormSelection('Subjects Request')}>Subjects Request</button></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <p className={`strong fw-bold position-relative ${hidelabel ? '' : 'ToBeUp'}`} style={{ top: hidelabel ? '10px' : '0' }}>Description:</p>
-                                <textarea
-                                    name="Description"
-                                    id=""
-                                    cols="40"
-                                    rows="3"
-                                    placeholder="Write Your Problem"
-                                    style={{ resize: 'none' }}
-                                    className="form-control shadow-none position-relative border-0"
-                                    value={description}
-                                    onChange={handleDescriptionChange}
-                                ></textarea>
-                            </div>
-                            
-                            <div className="d-flex justify-content-end mt-3">
-                                <button className="btn btn-success" type="button" onClick={handleSubmit}>
-                                    <Link to="" style={{ textDecoration: 'none', color: 'inherit' }}>Send</Link>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-}
+    setSubmitButtonDisabled(false);
+  };
+
+  return (
+    <section className="p-5">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="p-4 bg-light rounded" style={{ maxWidth: "700px" }}>
+            <Form
+              name="createForm"
+              className="mt-4"
+              autoComplete="off"
+              layout="vertical"
+              onFinish={submitHandler}
+            >
+              <Form.Item name="subject" label="Form Type">
+                <Select
+                  style={{
+                    width: 200,
+                  }}
+                  options={[
+                    {
+                      value: "Subject Hours",
+                      label: "Subject Hours",
+                    },
+                    {
+                      value: "OverLoad Hours",
+                      label: "OverLoad Hours",
+                    },
+                    {
+                      value: "Subjects Request",
+                      label: "Subjects Request",
+                    },
+                  ]}
+                />
+              </Form.Item>
+
+              <Form.Item label="Description" name="description">
+                <Input.TextArea placeholder="Enter description" />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="success"
+                  size="large"
+                  htmlType="submit"
+                  loading={submitButtonDisabled}
+                >
+                  Save
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default FormComponent;

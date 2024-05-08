@@ -30,23 +30,23 @@ function HomePage() {
   const [allProjects, setAllProjects] = useState([]);
 
   const fetchAllProjects = useCallback(async () => {
-      try {
-          const response = await getAllProjects();
-          const { data } = response;
-          setAllProjects(data);
-      } catch (err) {
-          console.error(err);
-      }
+    try {
+      const response = await getAllProjects();
+      const { data } = response;
+      setAllProjects(data);
+    } catch (err) {
+      console.error(err);
+    }
   }, []);
 
   useEffect(() => {
-      fetchAllProjects();
+    fetchAllProjects();
   }, [fetchAllProjects]);
 
   return (
     <section className="text-center position-relative">
       {/* Introduction */}
-      <div className="row">
+      <div className="row mx-0">
         <div className="col-lg-12 p-0 m-0">
           <img
             src="images/HomePage.png"
@@ -217,42 +217,37 @@ function HomePage() {
         <h2 className="text-center mb-3">Projects</h2>
         <div className="underline mb-lg-5 bg-success"></div>
         <div className="row justify-content-center">
-        {allProjects
-              .filter((_, index) => index < 3)
-              .map((project) => (
-                <div key={project._id} className="col-3 mb-4 m-md-4">
-                  <div className="member-card card fixed-height-card-member">
-                    <img
-                      src={project.mainPic.secure_url}
-                      className="img-fluid card-img-top lazyload img-thumbnail"
-                      alt="Member Image"
-                      style={{ height: "200px" }}
-                      onError={imageLoadingFailedHandler}
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title text-center">
-                        {project.title}
-                      </h5>
-                      <Link
-                        to={PATHS.project(project._id)}
-                        className="btn btn-success d-block mx-auto"
-                      >
-                        See Details{" "}
-                        <i
-                          className="fa fa-arrow-right ms-2"
-                          style={{ marginTop: "5px" }}
-                        ></i>
-                      </Link>
-                    </div>
+          {allProjects
+            .filter((_, index) => index < 3)
+            .map((project) => (
+              <div key={project._id} className="col-3 mb-4 m-md-4">
+                <div className="member-card card fixed-height-card-member">
+                  <img
+                    src={project.mainPic.secure_url}
+                    className="img-fluid card-img-top lazyload img-thumbnail"
+                    alt="Member Image"
+                    style={{ height: "200px" }}
+                    onError={imageLoadingFailedHandler}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title text-center">{project.title}</h5>
+                    <Link
+                      to={PATHS.project(project._id)}
+                      className="btn btn-success d-block mx-auto"
+                    >
+                      See Details{" "}
+                      <i
+                        className="fa fa-arrow-right ms-2"
+                        style={{ marginTop: "5px" }}
+                      ></i>
+                    </Link>
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
         </div>
         <div className="text-center mt-4">
-          <Link
-            to={PATHS.projects}
-            className="btn btn-outline-success"
-          >
+          <Link to={PATHS.projects} className="btn btn-outline-success">
             See All
           </Link>
         </div>
