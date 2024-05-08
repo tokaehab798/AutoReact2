@@ -2,7 +2,10 @@ import React, { useContext, useState } from "react";
 import { Button, Form, Upload, Input, message, Col, Flex, Row } from "antd";
 import { useNavigate } from "react-router-dom";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { beforUploadTypeFileIsImage, beforUploadTypeFileIsPdf } from "../../helpers/image";
+import {
+  beforUploadTypeFileIsImage,
+  beforUploadTypeFileIsPdf,
+} from "../../helpers/image";
 import { PATHS } from "../../constants/paths";
 import "./staffEditProfile.css";
 import { editStaffProfile } from "../../services/staff2";
@@ -36,14 +39,14 @@ const StaffEditProfile = () => {
       content: "This is a success message",
     });
 
-    navigate(PATHS.departmentmember);
+    navigate(PATHS.departmentMembers);
   };
 
   const submitHandler = async (values) => {
     setSubmitButtonDisabled(true);
 
     try {
-      await editStaffProfile(id ,values);
+      await editStaffProfile(id, values);
 
       submitSuccess();
     } catch (err) {
@@ -102,50 +105,49 @@ const StaffEditProfile = () => {
               </Upload>
             </Form.Item>
           </Col>
- 
-          <Col lg={6} xs={24}>
-  <Form.Item
-    label="Research Paper"
-    name="researchPapers[0].response"
-    valuePropName="fileList"
-    getValueFromEvent={(e) => e.fileList}// Limit to 1 file
-  >
-    <Upload
-      maxCount={1} // Limit to one file
-      accept="application/pdf" // Specify PDF files
-      listType="picture-card"
-       beforeUpload={beforUploadTypeFileIsPdf}
-      customRequest={imageFileUploadedHandler}
-    >
-      <Button
-        style={{
-          border: 0,
-          background: "none",
-        }}
-        type="button"
-      >
-        {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
-        <div
-          style={{
-            marginTop: 8,
-          }}
-        >
-          Upload PDF
-        </div>
-      </Button>
-    </Upload>
-  </Form.Item>
-</Col>
 
+          <Col lg={6} xs={24}>
+            <Form.Item
+              label="Research Paper"
+              name="researchPapers"
+              valuePropName="fileList"
+              getValueFromEvent={(e) => e.fileList} // Limit to 1 file
+            >
+              <Upload
+                maxCount={1} // Limit to one file
+                accept="application/pdf" // Specify PDF files
+                listType="picture-card"
+                beforeUpload={beforUploadTypeFileIsPdf}
+                customRequest={imageFileUploadedHandler}
+              >
+                <Button
+                  style={{
+                    border: 0,
+                    background: "none",
+                  }}
+                  type="button"
+                >
+                  {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
+                  <div
+                    style={{
+                      marginTop: 8,
+                    }}
+                  >
+                    Upload PDF
+                  </div>
+                </Button>
+              </Upload>
+            </Form.Item>
+          </Col>
 
           <Col lg={12} xs={24}>
             <Flex vertical>
               <Form.Item label="Brief" name="brief">
                 <Input placeholder="Enter title name" />
               </Form.Item>
-              <Form.Item label="Description" name="description">
+              {/* <Form.Item label="Description" name="description">
                 <Input.TextArea placeholder="Enter description" />
-              </Form.Item>
+              </Form.Item> */}
             </Flex>
           </Col>
         </Row>
@@ -153,10 +155,16 @@ const StaffEditProfile = () => {
         <Row justify="center" align="middle">
           <Col lg={12} xs={24}>
             <Flex vertical>
-              <Form.Item label="Subject Code" name="subjectHistory[0][subjectCode]">
+              <Form.Item
+                label="Subject Code"
+                name="subjectHistory[0][subjectCode]"
+              >
                 <Input placeholder="Enter name" />
               </Form.Item>
-              <Form.Item label="Subject Name" name="subjectHistory[0][subjectName]">
+              <Form.Item
+                label="Subject Name"
+                name="subjectHistory[0][subjectName]"
+              >
                 <Input placeholder="Enter title" />
               </Form.Item>
             </Flex>

@@ -1,5 +1,5 @@
 import * as pages from "./pages";
-import { ADMIN, ALL_ROLES } from "./roles";
+import { ADMIN, ALL_ROLES, DOCTOR, STUDENT } from "./roles";
 import { PATHS } from "./paths";
 
 // navbar routes
@@ -40,11 +40,22 @@ export const NAVBAR_ROUTES = [
     page: pages.Projects,
     label: "Projects",
   },
-
   {
-    path: PATHS.form,
-    roles: ALL_ROLES,
+    path: PATHS.form, // studentForm
+    roles: [STUDENT],
     page: pages.Form,
+    label: "Form",
+  },
+  {
+    path: PATHS.adminform, // adminForm
+    roles: [ADMIN],
+    page: pages.AdminForm,
+    label: "Form",
+  },
+  {
+    path: PATHS.doctorform, // doctorForm
+    roles: [DOCTOR],
+    page: pages.DoctorForm,
     label: "Form",
   },
   {
@@ -77,16 +88,6 @@ export const ADDITIONAL_ROUTES = [
     page: pages.Project,
   },
   {
-    path: PATHS.adminform,
-    roles: ALL_ROLES,
-    page: pages.AdminForm,
-  },
-  {
-    path: PATHS.doctorform,
-    roles: ALL_ROLES,
-    page: pages.DoctorForm,
-  },
-  {
     path: PATHS.externaltraining2,
     roles: ALL_ROLES,
     page: pages.ExternalTraining2,
@@ -103,7 +104,7 @@ export const ADDITIONAL_ROUTES = [
   },
   {
     path: PATHS.staffEditProfile,
-    roles: ALL_ROLES,
+    roles: [ADMIN, DOCTOR],
     page: pages.staffEditProfile,
   },
   {
@@ -113,17 +114,17 @@ export const ADDITIONAL_ROUTES = [
   },
   {
     path: PATHS.AdminAddAbout,
-    roles: ALL_ROLES,
+    roles: [ADMIN],
     page: pages.AdminAddAbout,
   },
   {
     path: PATHS.adminaddinternal,
-    roles: ALL_ROLES,
+    roles: [ADMIN],
     page: pages.AdminAddInternal,
   },
   {
     path: PATHS.adminaddexternal,
-    roles: ALL_ROLES,
+    roles: [ADMIN],
     page: pages.AdminAddExternal,
   },
   {
@@ -138,7 +139,7 @@ export const ADDITIONAL_ROUTES = [
   },
   {
     path: PATHS.adminaddstudyplan,
-    roles: ALL_ROLES,
+    roles: [ADMIN],
     page: pages.AdminAddStudyplan,
   },
   {

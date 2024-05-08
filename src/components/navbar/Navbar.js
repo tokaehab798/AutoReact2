@@ -11,7 +11,11 @@ import { imageLoadingFailedHandler } from "../../helpers/image";
 function Navbar() {
   const location = useLocation(); // Get the current location using useLocation()
   const navigate = useNavigate();
-  const { dispatch } = useContext(AuthContext);
+
+  const {
+    user: { role },
+    dispatch,
+  } = useContext(AuthContext);
 
   const userLoggedOutHandler = () => {
     clearAuth();
@@ -38,20 +42,22 @@ function Navbar() {
         </div>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            {NAVBAR_ROUTES.map((route, i) => (
-              <li className="nav-item" key={i}>
-                <NavLink
-                  className={`nav-link fs-6 ms-2 ${
-                    location.pathname === route.path
-                      ? "active text-white bg-success rounded"
-                      : ""
-                  }`}
-                  to={route.path}
-                >
-                  {route.label}
-                </NavLink>
-              </li>
-            ))}
+            {NAVBAR_ROUTES.filter((route) => route.roles?.includes(role)).map(
+              (route, i) => (
+                <li className="nav-item" key={i}>
+                  <NavLink
+                    className={`nav-link fs-6 ms-2 ${
+                      location.pathname === route.path
+                        ? "active text-white bg-success rounded"
+                        : ""
+                    }`}
+                    to={route.path}
+                  >
+                    {route.label}
+                  </NavLink>
+                </li>
+              )
+            )}
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -70,7 +76,10 @@ function Navbar() {
                   </a>
                 </li>
                 <li>
-                  <NavLink className="dropdown-item" to={PATHS.externaltraining2} >
+                  <NavLink
+                    className="dropdown-item"
+                    to={PATHS.externaltraining2}
+                  >
                     External Training
                   </NavLink>
                 </li>

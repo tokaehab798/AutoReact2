@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getStaffById } from "../../services/staff2";
 import { imageLoadingFailedHandler } from "../../helpers/image";
 import "./DepartmentMember.css";
 import { PATHS } from "../../constants/paths";
+import { ADMIN, DOCTOR } from "../../constants/roles";
+import { AuthContext } from "../../context/AuthContext";
 
 function DepartmentMemberProfile() {
+  const {
+    user: { role },
+  } = useContext(AuthContext);
+
   const [activeTab, setActiveTab] = useState("subjects");
   const [member, setMember] = useState(null);
   const { memberId } = useParams();
@@ -31,7 +37,6 @@ function DepartmentMemberProfile() {
     if (!member) {
       return <div>Loading...</div>;
     }
-
 
     switch (activeTab) {
       case "subjects":
@@ -92,15 +97,32 @@ function DepartmentMemberProfile() {
   };
   return (
     <section className="bg-light">
-           <div className=" d-flex justify-content-between container" style={{ paddingLeft: '20px',paddingTop: '20px' }}>
-        <a href="#" className="go-back-link" onClick={() => window.history.back()}>
+      <div
+        className=" d-flex justify-content-between container"
+        style={{ paddingLeft: "20px", paddingTop: "20px" }}
+      >
+        <a
+          href="#"
+          className="go-back-link"
+          onClick={() => window.history.back()}
+        >
           <i className="fas fa-arrow-left"></i> Go Back
         </a>
-        <button type="button" className="btn btn-primary" style={editButtonStyle}>
-        <Link to={PATHS.staffEditProfile} style={{ textDecoration: 'none', color: 'white' }}>
-        Edit
-        </Link>
-        </button>
+
+        {[ADMIN, DOCTOR].includes(role) && (
+          <button
+            type="button"
+            className="btn btn-primary"
+            style={editButtonStyle}
+          >
+            <Link
+              to={PATHS.staffEditProfile}
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              Edit
+            </Link>
+          </button>
+        )}
       </div>
       {member && (
         <div className="container">
@@ -108,7 +130,7 @@ function DepartmentMemberProfile() {
             <div className="col-3 text-center d-flex flex-column align-items-center">
               <div className="circle-img mb-3">
                 <img
-                  src={member.profilePicture.secure_url} 
+                  src={member.profilePicture.secure_url}
                   alt={member.user.name}
                   className="rounded-circle img-fluid"
                   onError={imageLoadingFailedHandler}

@@ -8,29 +8,32 @@ export const getStaffById = (id) => {
   });
 };
 
-
 export const editStaffProfile = (id, values) => {
-  const {
-    profilePicture,
-    brief,
-    description,
-  } = values;
+  const { profilePicture, researchPapers, brief } = values;
 
-  const fileResearchPaper = values["researchPapers[0].response"];
+  const fileResearchPaper = researchPapers[0].response;
   const fileProfilePictures = profilePicture[0].response;
 
   const formData = new FormData();
 
-  formData.append("description", description);
-  formData.append("brief", brief);
-  formData.append("subjectHistory[0][subjectCode]",values["subjectHistory[0].subjectCode"]);
-  formData.append("subjectHistory[0][subjectName]", values["subjectHistory[0].subjectName"]);
-  formData.append("researchPapers",fileResearchPaper);
-  formData.append("profilePicture",fileProfilePictures );
+  console.log(values["subjectHistory[0][subjectCode]"]);
 
-    return axiosInstance({
-      url:`/api/v2/staff/staff456`,
-      method: method.PUT,
-      data: formData,
-    });
+  formData.append("brief", brief);
+  formData.append(
+    "subjectHistory[0][subjectCode]",
+    values["subjectHistory[0][subjectCode]"]
+  );
+  formData.append(
+    "subjectHistory[0][subjectName]",
+    values["subjectHistory[0][subjectName]"]
+  );
+
+  formData.append("researchPapers", fileResearchPaper);
+  formData.append("profilePicture", fileProfilePictures);
+
+  return axiosInstance({
+    url: `/api/v2/staff/${id}`,
+    method: method.PUT,
+    data: formData,
+  });
 };
